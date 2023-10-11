@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/models/investment.dart';
-import 'package:portfolio/widgets/investments_list.dart';
+import 'package:portfolio/widgets/investments_list/investments_list.dart';
 
 class Investments extends StatefulWidget {
   const Investments({super.key});
@@ -15,7 +15,11 @@ class _InvestmentsState extends State<Investments> {
 
   final List<Investment> _listInvestments = [
     Investment(code: 'BTC', purchasePrice: 2.22, purchaseTime: DateTime.now(), currentValue: 2.34),
-    Investment(code: 'ETH', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
+    Investment(code: 'XEM', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
+    Investment(code: 'DOT', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
+    Investment(code: 'ELF', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
+    Investment(code: 'FLO', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
+    Investment(code: 'NSR', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
   ];
 
   @override
