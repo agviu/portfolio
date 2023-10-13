@@ -1,6 +1,6 @@
 # portfolio
 
-The portfolio app is used for managing your investmends done with Investrends.
+The portfolio app is used for managing your investments done with Investrends.
 
 ## Getting Started
 
