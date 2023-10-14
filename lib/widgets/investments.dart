@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/models/investment.dart';
 import 'package:portfolio/widgets/investments_list/investments_list.dart';
+import 'package:portfolio/widgets/new_investment.dart';
 
 class Investments extends StatefulWidget {
   const Investments({super.key});
@@ -22,6 +23,10 @@ class _InvestmentsState extends State<Investments> {
     Investment(code: 'NSR', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
   ];
 
+  void _openAddInvestmentOverlay() {
+    showModalBottomSheet(context: context, builder: (ctx) => NewInvestment(),);
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -29,7 +34,7 @@ class _InvestmentsState extends State<Investments> {
         title: const Text("Investrends Portfolio"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: _openAddInvestmentOverlay,
             icon: const Icon(Icons.add),
           ),
         ],
