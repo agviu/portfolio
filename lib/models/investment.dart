@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 
 enum Category { crypto, stock }
 
+final dateFormatter = DateFormat.yMd();
+
 const categoryIcons = {
   Category.crypto: Icons.account_balance_wallet,
   Category.stock: Icons.account_balance,
@@ -26,6 +28,6 @@ class Investment {
   final double currentValue;
 
   String get formattedPurchaseTime {
-    return DateFormat.yMd().format(purchaseTime);
+    return dateFormatter.format(purchaseTime);
   }
 }

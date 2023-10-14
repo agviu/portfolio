@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:portfolio/models/investment.dart';
 
 class NewInvestment extends StatefulWidget {
   const NewInvestment({super.key});
@@ -13,12 +14,23 @@ class NewInvestment extends StatefulWidget {
 class _NewInvestmentState extends State<NewInvestment> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  DateTime? _selectedDate;
 
   @override
   void dispose() {
     _titleController.dispose();
     _amountController.dispose();
     super.dispose();
+  }
+
+  void _purchaseDatePicker() async {
+    final initialDate = DateTime.now();
+    final firstDate = DateTime(initialDate.year - 1, initialDate.month, initialDate.day);
+    final lastDate = DateTime(initialDate.year + 1, initialDate.month, initialDate.day);
+    DateTime? pickedData = await showDatePicker(context: context, initialDate: initialDate, firstDate: firstDate, lastDate: lastDate);
+    setState((){
+      _selectedDate = pickedData;
+    });
   }
 
   @override
@@ -34,31 +46,50 @@ class _NewInvestmentState extends State<NewInvestment> {
                 label: Text('Investment code'),
               ),
             ),
-            TextField(
-              controller: _amountController,
-              maxLength: 10,
-              decoration: const InputDecoration(
-                label: Text('Investment amount'),
-              ),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _amountController,
+                    maxLength: 10,
+                    decoration: const InputDecoration(
+                      label: Text('Investment amount'),
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                    ],
+                  ),
+                ),
+                const SizedBox(width:  16,),
+                Row(
+                  children: [
+                    Text(
+                      _selectedDate == null ?
+                      'Purchase date' : dateFormatter.format(_selectedDate!)),
+                    IconButton(
+                      onPressed: _purchaseDatePicker,
+                      icon: const Icon(
+                        Icons.calendar_month,
+                      )
+                    )
+                  ],
+                ),
               ],
             ),
             Row(
               children: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel investment')),
                 ElevatedButton(
                     onPressed: () {
                       print(_titleController.text);
                       print(_amountController.text);
                     },
                     child: const Text('Save investment')),
-                TextButton(
-                    onPressed: () {
-                      print(_titleController.text);
-                      print(_amountController.text);
-                    },
-                    child: const Text('Cancel investment'))
               ],
             )
           ],
