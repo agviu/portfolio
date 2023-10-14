@@ -15,6 +15,7 @@ class _NewInvestmentState extends State<NewInvestment> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
+  Category _selectedCategory = Category.crypto;
 
   @override
   void dispose() {
@@ -25,10 +26,16 @@ class _NewInvestmentState extends State<NewInvestment> {
 
   void _purchaseDatePicker() async {
     final initialDate = DateTime.now();
-    final firstDate = DateTime(initialDate.year - 1, initialDate.month, initialDate.day);
-    final lastDate = DateTime(initialDate.year + 1, initialDate.month, initialDate.day);
-    DateTime? pickedData = await showDatePicker(context: context, initialDate: initialDate, firstDate: firstDate, lastDate: lastDate);
-    setState((){
+    final firstDate =
+        DateTime(initialDate.year - 1, initialDate.month, initialDate.day);
+    final lastDate =
+        DateTime(initialDate.year + 1, initialDate.month, initialDate.day);
+    DateTime? pickedData = await showDatePicker(
+        context: context,
+        initialDate: initialDate,
+        firstDate: firstDate,
+        lastDate: lastDate);
+    setState(() {
       _selectedDate = pickedData;
     });
   }
@@ -55,30 +62,49 @@ class _NewInvestmentState extends State<NewInvestment> {
                     decoration: const InputDecoration(
                       label: Text('Investment amount'),
                     ),
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d+\.?\d{0,2}')),
                     ],
                   ),
                 ),
-                const SizedBox(width:  16,),
+                const SizedBox(
+                  width: 16,
+                ),
                 Row(
                   children: [
-                    Text(
-                      _selectedDate == null ?
-                      'Purchase date' : dateFormatter.format(_selectedDate!)),
+                    Text(_selectedDate == null
+                        ? 'Purchase date'
+                        : dateFormatter.format(_selectedDate!)),
                     IconButton(
-                      onPressed: _purchaseDatePicker,
-                      icon: const Icon(
-                        Icons.calendar_month,
-                      )
-                    )
+                        onPressed: _purchaseDatePicker,
+                        icon: const Icon(
+                          Icons.calendar_month,
+                        ))
                   ],
                 ),
               ],
             ),
             Row(
               children: [
+                DropdownButton(
+                    value: _selectedCategory,
+                    items: Category.values
+                        .map((category) => DropdownMenuItem(
+                              value: category,
+                              child: Text(category.name.toUpperCase()),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      if (value == null) {
+                        return;
+                      }
+                      setState(() {
+                        _selectedCategory = value;
+                      });
+                    }),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
