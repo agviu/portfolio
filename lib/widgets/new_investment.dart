@@ -11,10 +11,12 @@ class NewInvestment extends StatefulWidget {
 
 class _NewInvestmentState extends State<NewInvestment> {
   String _enteredCode = "";
+  final _titleController = TextEditingController();
 
-  void _saveCodeInput(String code) {
-    print(code);
-    _enteredCode = code;
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
   }
 
   @override
@@ -24,7 +26,7 @@ class _NewInvestmentState extends State<NewInvestment> {
         child: Column(
           children: [
             TextField(
-              onChanged: _saveCodeInput,
+              controller: _titleController,
               maxLength: 50,
               decoration: const InputDecoration(
                 label: Text('Investment code'),
@@ -34,7 +36,7 @@ class _NewInvestmentState extends State<NewInvestment> {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      print(_enteredCode);
+                      print(_titleController.text);
                     },
                     child: const Text('Save investment')),
               ],
