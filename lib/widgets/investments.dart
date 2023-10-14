@@ -46,10 +46,16 @@ class _InvestmentsState extends State<Investments> {
         currentValue: 4.55),
   ];
 
+  void _addInvestment(Investment investment) {
+    setState(() {
+      _listInvestments.add(investment);
+    });
+  }
+
   void _openAddInvestmentOverlay() {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => NewInvestment(),
+      builder: (ctx) => NewInvestment(onAddInvestment: _addInvestment),
     );
   }
 

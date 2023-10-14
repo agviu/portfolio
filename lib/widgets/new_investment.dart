@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:portfolio/models/investment.dart';
 
 class NewInvestment extends StatefulWidget {
-  const NewInvestment({super.key});
+  const NewInvestment({super.key, required this.onAddInvestment});
+  final void Function(Investment investment) onAddInvestment;
 
   @override
   State<NewInvestment> createState() {
@@ -63,6 +64,14 @@ class _NewInvestmentState extends State<NewInvestment> {
       );
       return;
     }
+
+    widget.onAddInvestment(Investment(
+      code: _titleController.text,
+      purchasePrice: enteredAmount,
+      purchaseTime: _selectedDate!,
+      currentValue: 0,
+    ));
+    Navigator.pop(context);
   }
 
   @override
