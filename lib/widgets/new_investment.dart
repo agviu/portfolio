@@ -40,6 +40,31 @@ class _NewInvestmentState extends State<NewInvestment> {
     });
   }
 
+  void _submitInvestmentData() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid input'),
+          content: const Text(
+              'Please make sure a valid title, amount, date and category was entered.'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+                child: const Text('Okay'))
+          ],
+        ),
+      );
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -87,6 +112,9 @@ class _NewInvestmentState extends State<NewInvestment> {
                 ),
               ],
             ),
+            const SizedBox(
+              height: 16,
+            ),
             Row(
               children: [
                 DropdownButton(
@@ -105,16 +133,14 @@ class _NewInvestmentState extends State<NewInvestment> {
                         _selectedCategory = value;
                       });
                     }),
+                const Spacer(),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: const Text('Cancel investment')),
                 ElevatedButton(
-                    onPressed: () {
-                      print(_titleController.text);
-                      print(_amountController.text);
-                    },
+                    onPressed: _submitInvestmentData,
                     child: const Text('Save investment')),
               ],
             )
