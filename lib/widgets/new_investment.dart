@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NewInvestment extends StatefulWidget {
   const NewInvestment({super.key});
@@ -10,12 +11,13 @@ class NewInvestment extends StatefulWidget {
 }
 
 class _NewInvestmentState extends State<NewInvestment> {
-  String _enteredCode = "";
   final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
 
   @override
   void dispose() {
     _titleController.dispose();
+    _amountController.dispose();
     super.dispose();
   }
 
@@ -32,13 +34,31 @@ class _NewInvestmentState extends State<NewInvestment> {
                 label: Text('Investment code'),
               ),
             ),
+            TextField(
+              controller: _amountController,
+              maxLength: 10,
+              decoration: const InputDecoration(
+                label: Text('Investment amount'),
+              ),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+              ],
+            ),
             Row(
               children: [
                 ElevatedButton(
                     onPressed: () {
                       print(_titleController.text);
+                      print(_amountController.text);
                     },
                     child: const Text('Save investment')),
+                TextButton(
+                    onPressed: () {
+                      print(_titleController.text);
+                      print(_amountController.text);
+                    },
+                    child: const Text('Cancel investment'))
               ],
             )
           ],

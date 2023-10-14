@@ -13,38 +13,64 @@ class Investments extends StatefulWidget {
 }
 
 class _InvestmentsState extends State<Investments> {
-
   final List<Investment> _listInvestments = [
-    Investment(code: 'BTC', purchasePrice: 2.22, purchaseTime: DateTime.now(), currentValue: 2.34),
-    Investment(code: 'XEM', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
-    Investment(code: 'DOT', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
-    Investment(code: 'ELF', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
-    Investment(code: 'FLO', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
-    Investment(code: 'NSR', purchasePrice: 1.45, purchaseTime: DateTime.now(), currentValue: 4.55),
+    Investment(
+        code: 'BTC',
+        purchasePrice: 2.22,
+        purchaseTime: DateTime.now(),
+        currentValue: 2.34),
+    Investment(
+        code: 'XEM',
+        purchasePrice: 1.45,
+        purchaseTime: DateTime.now(),
+        currentValue: 4.55),
+    Investment(
+        code: 'DOT',
+        purchasePrice: 1.45,
+        purchaseTime: DateTime.now(),
+        currentValue: 4.55),
+    Investment(
+        code: 'ELF',
+        purchasePrice: 1.45,
+        purchaseTime: DateTime.now(),
+        currentValue: 4.55),
+    Investment(
+        code: 'FLO',
+        purchasePrice: 1.45,
+        purchaseTime: DateTime.now(),
+        currentValue: 4.55),
+    Investment(
+        code: 'NSR',
+        purchasePrice: 1.45,
+        purchaseTime: DateTime.now(),
+        currentValue: 4.55),
   ];
 
   void _openAddInvestmentOverlay() {
-    showModalBottomSheet(context: context, builder: (ctx) => NewInvestment(),);
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => NewInvestment(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(
-        title: const Text("Investrends Portfolio"),
-        actions: [
-          IconButton(
-            onPressed: _openAddInvestmentOverlay,
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          const Text('The investments...'),
-          // Text('List of expenses...'),
-          Expanded( child: InvestmentsList(investments: _listInvestments)),
-        ],)
-    );
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("Investrends Portfolio"),
+          actions: [
+            IconButton(
+              onPressed: _openAddInvestmentOverlay,
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            const Text('The investments...'),
+            // Text('List of expenses...'),
+            Expanded(child: InvestmentsList(investments: _listInvestments)),
+          ],
+        ));
   }
 }

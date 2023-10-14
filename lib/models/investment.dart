@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-enum Category {crypto, stock}
+enum Category { crypto, stock }
 
 const categoryIcons = {
   Category.crypto: Icons.account_balance_wallet,
@@ -11,8 +11,11 @@ const categoryIcons = {
 };
 
 class Investment {
-
-  const Investment({required this.code, required this.purchasePrice, required this.purchaseTime, required this.currentValue});
+  const Investment(
+      {required this.code,
+      required this.purchasePrice,
+      required this.purchaseTime,
+      required this.currentValue});
 
   final String code;
 

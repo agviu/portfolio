@@ -11,7 +11,7 @@ class InvestmentsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemBuilder: (ctx, index) => InvestmentItem(investments[index]), 
+      itemBuilder: (ctx, index) => InvestmentItem(investments[index]),
       itemCount: investments.length,
     );
   }
