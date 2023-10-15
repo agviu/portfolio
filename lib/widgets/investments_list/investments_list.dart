@@ -15,10 +15,15 @@ class InvestmentsList extends StatelessWidget {
     return ListView.builder(
       itemBuilder: (ctx, index) => Dismissible(
         key: ValueKey(investments[index]),
-        child: InvestmentItem(investments[index]),
+        background: Container(
+            color: Theme.of(context).colorScheme.error.withOpacity(0.6),
+            margin: EdgeInsets.symmetric(
+              horizontal: Theme.of(context).cardTheme.margin!.horizontal,
+            )),
         onDismissed: (direction) {
           onRemoveExpense(investments[index]);
         },
+        child: InvestmentItem(investments[index]),
       ),
       itemCount: investments.length,
     );

@@ -147,10 +147,10 @@ class _NewInvestmentState extends State<NewInvestment> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Cancel investment')),
+                    child: const Text('Cancel')),
                 ElevatedButton(
                     onPressed: _submitInvestmentData,
-                    child: const Text('Save investment')),
+                    child: const Text('Save')),
               ],
             )
           ],
