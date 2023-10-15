@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/models/investment.dart';
 import 'package:portfolio/widgets/investments_list/investments_list.dart';
 import 'package:portfolio/widgets/new_investment.dart';
+import 'package:portfolio/widgets/chart/chart.dart';
 
 class Investments extends StatefulWidget {
   const Investments({super.key});
@@ -44,6 +45,7 @@ class _InvestmentsState extends State<Investments> {
         purchasePrice: 1.45,
         purchaseTime: DateTime.now(),
         currentValue: 4.55),
+    // category: Category.stock,
   ];
 
   void _addInvestment(Investment investment) {
@@ -95,21 +97,23 @@ class _InvestmentsState extends State<Investments> {
       );
     }
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Investrends Portfolio"),
-          actions: [
-            IconButton(
-              onPressed: _openAddInvestmentOverlay,
-              icon: const Icon(Icons.add),
-            ),
-          ],
-        ),
-        body: Column(
-          children: [
-            const Text('The investments...'),
-            // Text('List of expenses...'),
-            Expanded(child: mainContent),
-          ],
-        ));
+      appBar: AppBar(
+        title: const Text("Investrends Portfolio"),
+        actions: [
+          IconButton(
+            onPressed: _openAddInvestmentOverlay,
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          const Text('The investments...'),
+          Chart(investments: _listInvestments),
+          // Text('List of expenses...'),
+          Expanded(child: mainContent),
+        ],
+      ),
+    );
   }
 }
