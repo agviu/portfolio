@@ -53,9 +53,25 @@ class _InvestmentsState extends State<Investments> {
   }
 
   void _removeInvestment(Investment investment) {
+    final investmentIndex = _listInvestments.indexOf(investment);
     setState(() {
       _listInvestments.remove(investment);
     });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Investment deleted'),
+        duration: const Duration(seconds: 4),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              _listInvestments.insert(investmentIndex, investment);
+            });
+          },
+        ),
+      ),
+    );
   }
 
   void _openAddInvestmentOverlay() {
@@ -68,6 +84,16 @@ class _InvestmentsState extends State<Investments> {
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text("No investments found. Add one!"),
+    );
+
+    if (_listInvestments.isNotEmpty) {
+      mainContent = InvestmentsList(
+        investments: _listInvestments,
+        onRemoveExpense: _removeInvestment,
+      );
+    }
     return Scaffold(
         appBar: AppBar(
           title: const Text("Investrends Portfolio"),
@@ -82,8 +108,7 @@ class _InvestmentsState extends State<Investments> {
           children: [
             const Text('The investments...'),
             // Text('List of expenses...'),
-            Expanded(child: InvestmentsList(investments: _listInvestments,
-              onRemoveExpense: _removeInvestment,)),
+            Expanded(child: mainContent),
           ],
         ));
   }
