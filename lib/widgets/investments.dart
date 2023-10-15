@@ -52,8 +52,15 @@ class _InvestmentsState extends State<Investments> {
     });
   }
 
+  void _removeInvestment(Investment investment) {
+    setState(() {
+      _listInvestments.remove(investment);
+    });
+  }
+
   void _openAddInvestmentOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (ctx) => NewInvestment(onAddInvestment: _addInvestment),
     );
@@ -75,7 +82,8 @@ class _InvestmentsState extends State<Investments> {
           children: [
             const Text('The investments...'),
             // Text('List of expenses...'),
-            Expanded(child: InvestmentsList(investments: _listInvestments)),
+            Expanded(child: InvestmentsList(investments: _listInvestments,
+              onRemoveExpense: _removeInvestment,)),
           ],
         ));
   }
