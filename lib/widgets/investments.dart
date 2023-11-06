@@ -41,11 +41,12 @@ class _InvestmentsState extends State<Investments> {
         purchaseTime: DateTime.now(),
         currentValue: 4.55),
     Investment(
-        code: 'NSR',
-        purchasePrice: 1.45,
-        purchaseTime: DateTime.now(),
-        currentValue: 4.55),
-    // category: Category.stock,
+      code: 'NSR',
+      purchasePrice: 1.45,
+      purchaseTime: DateTime.now(),
+      currentValue: 4.55,
+      category: Category.stock,
+    )
   ];
 
   void _addInvestment(Investment investment) {
@@ -96,24 +97,12 @@ class _InvestmentsState extends State<Investments> {
         onRemoveExpense: _removeInvestment,
       );
     }
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Investrends Portfolio"),
-        actions: [
-          IconButton(
-            onPressed: _openAddInvestmentOverlay,
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          const Text('The investments...'),
-          Chart(investments: _listInvestments),
-          // Text('List of expenses...'),
-          Expanded(child: mainContent),
-        ],
-      ),
+    return Column(
+      children: [
+        Chart(investments: _listInvestments),
+        // Text('List of expenses...'),
+        Expanded(child: mainContent),
+      ],
     );
   }
 }

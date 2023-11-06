@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/widgets/investments.dart';
+import 'package:portfolio/screens/tabs.dart';
 
 void main() {
   runApp(const PortfolioApp());
@@ -65,7 +66,7 @@ class PortfolioApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const Investments(),
+      home: const TabsScreen(),
       // themeMode: ThemeMode.light,
     );
   }
