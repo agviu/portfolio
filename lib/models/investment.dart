@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-enum Category { crypto, stock }
+import 'package:portfolio/models/category.dart';
 
 final dateFormatter = DateFormat.yMd();
 
