@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/models/category.dart';
 import 'package:portfolio/models/investment.dart';
 import 'package:portfolio/widgets/investments_list/investments_list.dart';
 import 'package:portfolio/widgets/new_investment.dart';

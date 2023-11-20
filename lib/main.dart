@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/widgets/investments.dart';
+// import 'package:portfolio/widgets/investments.dart';
 import 'package:portfolio/screens/tabs.dart';
 
 void main() {

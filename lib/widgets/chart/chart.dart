@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:portfolio/widgets/chart/chart_bar.dart';
 import 'package:portfolio/models/investment.dart';
+import 'package:portfolio/models/category.dart';
 
 class Chart extends StatelessWidget {
   const Chart({super.key, required this.investments});

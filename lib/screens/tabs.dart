@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/screens/market_screen.dart';
 import 'package:portfolio/widgets/investments.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -26,17 +27,17 @@ class _TabsScreenState extends State<TabsScreen> {
                 child: Text('Drawer Header'),
               ),
               ListTile(
-                title: const Text('Item 1'),
+                title: const Text('My portfolio'),
                 onTap: () {
                   // Update the state of the app.
                   // ...
                 },
               ),
               ListTile(
-                title: const Text('Item 2'),
+                title: const Text('Market'),
                 onTap: () {
-                  // Update the state of the app.
-                  // ...
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MarketScreen()));
                 },
               ),
             ],
