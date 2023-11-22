@@ -3,6 +3,8 @@ import 'package:portfolio/models/asset.dart';
 import 'package:portfolio/widgets/market/asset_item.dart';
 
 class MarketList extends StatefulWidget {
+  const MarketList({super.key});
+
   @override
   State<StatefulWidget> createState() {
     List<Asset> assets = [

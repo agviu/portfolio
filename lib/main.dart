@@ -23,7 +23,6 @@ class PortfolioApp extends StatelessWidget {
     return MaterialApp(
       title: 'Investrends portfolio',
       theme: ThemeData().copyWith(
-        useMaterial3: true,
         colorScheme: kColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
           backgroundColor: kColorScheme.onPrimaryContainer,
@@ -50,7 +49,6 @@ class PortfolioApp extends StatelessWidget {
             ),
       ),
       darkTheme: ThemeData.dark().copyWith(
-        useMaterial3: true,
         colorScheme: kDarkColorScheme,
         cardTheme: const CardTheme().copyWith(
           color: kDarkColorScheme.secondaryContainer,

@@ -37,7 +37,7 @@ class _TabsScreenState extends State<TabsScreen> {
                 title: const Text('Market'),
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MarketScreen()));
+                      MaterialPageRoute(builder: (context) => const MarketScreen()));
                 },
               ),
             ],
@@ -45,13 +45,13 @@ class _TabsScreenState extends State<TabsScreen> {
         ),
         appBar: AppBar(
           title: const Text("Investrends Portfolio"),
-          actions: [
+          actions: const [
             // IconButton(
             //   onPressed: _openAddInvestmentOverlay,
             //   icon: const Icon(Icons.add),
             // ),
           ],
         ),
-        body: Investments());
+        body: const Investments());
   }
 }
