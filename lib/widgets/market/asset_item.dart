@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/models/asset.dart';
+import 'package:portfolio/models/assets/asset.dart';
 import 'package:portfolio/widgets/market/asset_prices.dart';
 
 class AssetItemWidget extends StatelessWidget {

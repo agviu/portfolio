@@ -1,4 +1,5 @@
-import 'package:portfolio/models/asset.dart';
+import 'package:portfolio/models/assets/asset.dart';
+import 'package:portfolio/models/assets/asset_price.dart';
 import 'package:flutter/material.dart';
 
 class AssetPricesWidget extends StatelessWidget {
