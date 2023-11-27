@@ -1,5 +1,4 @@
 import 'package:portfolio/models/assets/asset.dart';
-import 'package:portfolio/models/assets/asset_price.dart';
 import 'package:flutter/material.dart';
 
 class AssetPricesWidget extends StatelessWidget {
@@ -7,7 +6,7 @@ class AssetPricesWidget extends StatelessWidget {
 
   final Asset asset;
 
-  final List<AssetPrice> prices;
+  final Map<String, double> prices;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +18,8 @@ class AssetPricesWidget extends StatelessWidget {
             return Card(
               child: Row(
                 children: [
-                  Text(prices[index].timestamp.toString()),
-                  Text(prices[index].value.toString()),
+                  // Text(prices[index]!.time),
+                  // Text(prices[index]!.value.toString()),
                 ],
               ),
             );

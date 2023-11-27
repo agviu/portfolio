@@ -8,94 +8,130 @@ void main() {
         "code": "ADA",
         "prices": [
             {
-                "timestamp": "2023-09-03T00:00:00",
-                "value": 44223.52
+                "year.week": "2020.38",
+                "value": 66567
             },
             {
-                "timestamp": "2022-04-18T00:00:00",
-                "value": 40442.29
+                "year.week": "2018.37",
+                "value": 76448
             },
             {
-                "timestamp": "2022-08-03T00:00:00",
-                "value": 13596.89
+                "year.week": "2018.13",
+                "value": 96925
             },
             {
-                "timestamp": "2021-07-10T00:00:00",
-                "value": 47930.12
+                "year.week": "2023.20",
+                "value": 26436
             },
             {
-                "timestamp": "2021-11-28T00:00:00",
-                "value": 41444.35
+                "year.week": "2022.36",
+                "value": 98341
             }
         ],
-        "category": "crypto"
+        "category": "crypto",
+        "mode": "year.week"
+    },
+    {
+        "code": "SHIB",
+        "prices": [
+            {
+                "year.week": "2020.1",
+                "value": 88128
+            },
+            {
+                "year.week": "2021.33",
+                "value": 56051
+            },
+            {
+                "year.week": "2022.11",
+                "value": 95097
+            },
+            {
+                "year.week": "2019.43",
+                "value": 39633
+            },
+            {
+                "year.week": "2020.1",
+                "value": 91910
+            }
+        ],
+        "category": "crypto",
+        "mode": "year.week"
     },
     {
         "code": "XRP",
         "prices": [
             {
-                "timestamp": "2023-06-20T00:00:00",
-                "value": 11149.62
+                "year.week": "2020.24",
+                "value": 40285.57
             },
             {
-                "timestamp": "2023-02-08T00:00:00",
-                "value": 5008.12
+                "year.week": "2022.1",
+                "value": 45551.33
             },
             {
-                "timestamp": "2022-09-26T00:00:00",
-                "value": 1643.61
+                "year.week": "2022.41",
+                "value": 99996.69
             },
             {
-                "timestamp": "2023-03-17T00:00:00",
-                "value": 14529.69
+                "year.week": "2020.39",
+                "value": 80705.27
             },
             {
-                "timestamp": "2021-05-28T00:00:00",
-                "value": 18414.12
+                "year.week": "2021.34",
+                "value": 58275.39
             }
         ],
-        "category": "crypto"
+        "category": "crypto",
+        "mode": "year.week"
     },
     {
         "code": "BNB",
-        "prices": [{"timestamp": "2023-09-03T00:00:00", "value": 98011}, {"timestamp": "2022-04-18T06:00:00", "value": 30931}, {"timestamp": "2022-08-03T12:00:00", "value": 28488}, {"timestamp": "2023-09-03T18:00:00", "value": 59343}, {"timestamp": "2022-08-03T00:00:00", "value": 6029}],
-        "category": "crypto"
+        "prices": [
+            {"year.week": "2019.43", "value": 32713.31},
+            {"year.week": "2023.11", "value": 18751.15},
+            {"year.week": "2019.22", "value": 70617.28},
+            {"year.week": "2022.1", "value": 59174.05},
+            {"year.week": "2022.51", "value": 5592.55}
+        ],   
+        "category": "crypto",
+        "mode": "year.week"
     },
     {
         "code": "BTC",
-        "prices": [{"timestamp": "2023-09-03T00:00:00", "value": 59208}, {"timestamp": "2023-09-03T18:00:00", "value": 87381}, {"timestamp": "2021-11-28T00:00:00", "value": 26637}, {"timestamp": "2022-04-18T06:00:00", "value": 85711}, {"timestamp": "2023-09-03T06:00:00", "value": 86601}],
-        "category": "crypto"
+        "prices": [
+          {"year.week": "2018.30", "value": 41896.38},
+          {"year.week": "2019.9", "value": 48798.57},
+          {"year.week": "2022.1", "value": 52661.67},
+          {"year.week": "2021.24", "value": 26885.34},
+          {"year.week": "2023.44", "value": 67243.13}
+        ],
+        "category": "crypto",
+        "mode": "year.week"
     },
     {
         "code": "DOT",
-        "prices": [{"timestamp": "2021-11-28T00:00:00", "value": 62951}, {"timestamp": "2021-07-10T12:00:00", "value": 2371}, {"timestamp": "2021-11-28T00:00:00", "value": 4229}, {"timestamp": "2021-07-10T00:00:00", "value": 95086}, {"timestamp": "2023-09-03T06:00:00", "value": 73847}],
-        "category": "stock"
+        "prices": [
+            {"year.week": "2019.11", "value": 53888.23},
+            {"year.week": "2021.1", "value": 95494.48},
+            {"year.week": "2023.24", "value": 43549.87},
+            {"year.week": "2021.36", "value": 50806.98},
+            {"year.week": "2019.31", "value": 2348.07}
+        ],
+        "category": "stock",
+        "mode": "year.week"
     },
     {
         "code": "ETH",
         "prices": [
-            {
-                "timestamp": "2021-07-10T12:00:00",
-                "value": 98115
-            },
-            {
-                "timestamp": "2022-04-18T12:00:00",
-                "value": 73015
-            },
-            {
-                "timestamp": "2022-04-18T18:00:00",
-                "value": 2111
-            },
-            {
-                "timestamp": "2021-07-10T12:00:00",
-                "value": 19976
-            },
-            {
-                "timestamp": "2022-08-03T12:00:00",
-                "value": 2
-            }
+            {"year.week": "2019.8", "value": 60984.21},
+            {"year.week": "2020.22", "value": 49077.19},
+            {"year.week": "2022.35", "value": 21276.15},
+            {"year.week": "2018.17", "value": 86030.46},
+            {"year.week": "2019.16", "value": 74311.23}
         ],
-        "category": "stock"
+        "category": "stock",
+        "mode": "year.week"
     }
   ]
   """;

@@ -1,32 +1,52 @@
 import 'package:portfolio/models/category.dart';
-import 'package:portfolio/models/assets/asset_price.dart';
+import 'package:portfolio/models/time_mode.dart';
 
 class Asset {
   const Asset({
     required this.code,
     required this.prices,
     this.category = Category.crypto,
+    this.mode = TimeMode.yearWeek,
   });
 
   factory Asset.fromJson(Map<String, dynamic> jsonContent) {
     var priceList = jsonContent['prices'] as List;
-    List<AssetPrice> prices = priceList
-        .map((pricesData) => AssetPrice(
-              timestamp: DateTime.parse(pricesData["timestamp"]),
-              value: pricesData["value"].toDouble(),
-            ))
-        .toList();
+    Map<String, double> pricesMap = {};
+
+    final TimeMode mode;
+
+    if (jsonContent.containsKey('mode') && jsonContent['mode'] != null) {
+      mode = stringToTimeMode(jsonContent['mode']);
+    } else {
+      // Default value.
+      mode = TimeMode.yearWeek;
+    }
+
+    for (var pricesData in priceList) {
+      // var assetPrice = AssetPrice(
+      //   timeMode: mode,
+      //   value: pricesData["value"].toDouble(),
+      //   time: pricesData[timeModeToString(mode)],
+      // );
+
+      // Add to the map
+      pricesMap[pricesData[timeModeToString(mode)]] =
+          pricesData["value"].toDouble();
+    }
 
     return Asset(
       code: jsonContent['code'],
-      prices: prices,
+      prices: pricesMap,
       category: stringToCategory(jsonContent['category']),
+      mode: mode,
     );
   }
 
   final String code;
 
-  final List<AssetPrice> prices;
+  final Map<String, double> prices;
 
   final Category category;
+
+  final TimeMode mode;
 }
