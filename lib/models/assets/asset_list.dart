@@ -5,8 +5,7 @@ class AssetList {
   AssetList(this.assets);
 
   factory AssetList.fromJson(String jsonContent) {
-    var content = json.decode(jsonContent);
-    print(content);
+    var content = jsonDecode(jsonContent);
 
     List<Asset> assets =
         (content as List).map((assetMap) => Asset.fromJson(assetMap)).toList();
