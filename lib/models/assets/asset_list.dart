@@ -13,4 +13,8 @@ class AssetList {
   }
 
   List<Asset> assets;
+
+  int length() {
+    return assets.length;
+  }
 }
