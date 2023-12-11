@@ -23,12 +23,6 @@ class Asset {
     }
 
     for (var pricesData in priceList) {
-      // var assetPrice = AssetPrice(
-      //   timeMode: mode,
-      //   value: pricesData["value"].toDouble(),
-      //   time: pricesData[timeModeToString(mode)],
-      // );
-
       // Add to the map
       pricesMap[pricesData[timeModeToString(mode)]] =
           pricesData["value"].toDouble();

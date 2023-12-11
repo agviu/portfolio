@@ -17,4 +17,19 @@ void main() {
           'The creation of AssetList from a JSON failed with the exception: $e');
     }
   });
+
+  test('Sort assets by more value to less value', () async {
+    var jsonFile = 'test/models/assets/valid_assets_list.json';
+    String jsonContent = await File(jsonFile).readAsString();
+
+    final AssetList assetList = AssetList.fromJson(jsonContent);
+
+    // Get the list of assets listed by the ones that have more value in the last week:
+
+    // Get the list of assets listed by the ones that have grown more in the last week:
+
+    // Get the list of assets listed by the ones that have grown more in the last month:
+
+    // Get the list of assets listed by the ones that have grown more in the last months:
+  });
 }
