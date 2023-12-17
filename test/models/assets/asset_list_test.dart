@@ -24,12 +24,19 @@ void main() {
 
     final AssetList assetList = AssetList.fromJson(jsonContent);
 
-    // Get the list of assets listed by the ones that have more value in the last week:
+    // Get the list of assets sorted by the asset that had more value in a given week:
+    assetList.sortByHigherValueFromDate("2023.48");
+    if (assetList.assets.first.code != 'SHIB') {
+      fail("SHIB it the item with higher value in the asset list.");
+    }
+    if (assetList.assets.last.code != 'BNB') {
+      fail("BNB is the item with lowest value in the asset list.");
+    }
 
-    // Get the list of assets listed by the ones that have grown more in the last week:
+    // Get the list of assets sorted by the asset that had grown more in the last week:
 
-    // Get the list of assets listed by the ones that have grown more in the last month:
+    // Get the list of assets sorted by the asset that had grown more in the last month:
 
-    // Get the list of assets listed by the ones that have grown more in the last months:
+    // Get the list of assets sorted by the asset that had grown more in the last months:
   });
 }

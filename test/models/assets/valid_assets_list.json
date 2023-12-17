@@ -3,7 +3,7 @@
         "code": "ADA",
         "prices": [
             {
-                "year.week": "2020.38",
+                "year.week": "2023.48",
                 "value": 66567
             },
             {
@@ -30,7 +30,7 @@
         "code": "SHIB",
         "prices": [
             {
-                "year.week": "2020.1",
+                "year.week": "2023.48",
                 "value": 88128
             },
             {
@@ -57,7 +57,7 @@
         "code": "XRP",
         "prices": [
             {
-                "year.week": "2020.24",
+                "year.week": "2023.48",
                 "value": 40285.57
             },
             {
@@ -84,7 +84,7 @@
         "code": "BNB",
         "prices": [
             {
-                "year.week": "2019.43",
+                "year.week": "2023.48",
                 "value": 32713.31
             },
             {
@@ -111,7 +111,7 @@
         "code": "BTC",
         "prices": [
             {
-                "year.week": "2018.30",
+                "year.week": "2023.48",
                 "value": 41896.38
             },
             {
@@ -138,7 +138,7 @@
         "code": "DOT",
         "prices": [
             {
-                "year.week": "2019.11",
+                "year.week": "2023.48",
                 "value": 53888.23
             },
             {
@@ -165,7 +165,7 @@
         "code": "ETH",
         "prices": [
             {
-                "year.week": "2019.8",
+                "year.week": "2023.48",
                 "value": 60984.21
             },
             {

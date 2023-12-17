@@ -1,5 +1,6 @@
 import 'package:portfolio/models/category.dart';
 import 'package:portfolio/models/time_mode.dart';
+import 'package:portfolio/utils/dates.dart';
 
 class Asset {
   const Asset({
@@ -43,4 +44,8 @@ class Asset {
   final Category category;
 
   final TimeMode mode;
+
+  double? price(dynamic from, [TimeMode mode = TimeMode.yearWeek]) {
+    return prices[from];
+  }
 }
