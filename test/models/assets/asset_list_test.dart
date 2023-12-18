@@ -32,6 +32,13 @@ void main() {
     if (assetList.assets.last.code != 'BNB') {
       fail("BNB is the item with lowest value in the asset list.");
     }
+    assetList.sortByHigherValueFromDate("2023.47");
+    if (assetList.assets.first.code != 'DOT') {
+      fail("DOT it the item with higher value in the asset list.");
+    }
+    if (assetList.assets.last.code != 'BNB') {
+      fail("BNB is the item with lowest value in the asset list.");
+    }
 
     // Get the list of assets sorted by the asset that had grown more in the last week:
 

@@ -33,9 +33,9 @@ class AssetList {
         if (a.price(date, mode) == null && b.price(date, mode) == null) {
           return 0;
         } else if (a.price(date, mode) == null && b.price(date, mode) != null) {
-          return -1;
-        } else if (a.price(date, mode) != null && b.price(date, mode) == null) {
           return 1;
+        } else if (a.price(date, mode) != null && b.price(date, mode) == null) {
+          return -1;
         }
 
         if (a.price(date, mode)! > b.price(date, mode)!) {
