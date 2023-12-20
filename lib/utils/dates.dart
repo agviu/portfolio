@@ -55,4 +55,84 @@ class DateUtils {
       throw UnsupportedError("Only weekYear is supported for now.");
     }
   }
+
+  /// Returns the next date, considering also swith to next year if needed.
+  /// E.g. if [date] is 2023.3, it will return 2023.4.
+  /// If it reaches the end of the year, will get the first week of next year.
+  String getNextDate(String date, {TimeMode mode = TimeMode.yearWeek}) {
+    if (mode == TimeMode.yearWeek) {
+      var parts = date.split('.');
+      if (parts.length != 2) {
+        throw const FormatException('Invalid format. Expected format: YYYY.WW');
+      }
+
+      int year = int.tryParse(parts[0]) ?? 0;
+      int week = int.tryParse(parts[1]) ?? 0;
+
+      if (year < 1 || week < 1 || week > 53) {
+        throw const FormatException('Invalid year or week number.');
+      }
+
+      // Check if the year has 52 or 53 weeks
+      int weeksInYear = has53Weeks(year) ? 53 : 52;
+
+      // Increment the week, rolling over to the next year if necessary
+      if (week < weeksInYear) {
+        week++;
+      } else {
+        week = 1;
+        year++;
+      }
+
+      return '$year.${week.toString()}';
+    } else {
+      throw UnsupportedError("Only weekYear is supported for now.");
+    }
+  }
+
+  /// Returns the previous date, considering also swith to previous year if needed.
+  /// E.g. if [date] is 2023.4, it will return 2023.3.
+  /// If it reaches the begining of the year, will get the first week of previous year.
+  String getPreviousDate(String date, {TimeMode mode = TimeMode.yearWeek}) {
+    if (mode == TimeMode.yearWeek) {
+      var parts = date.split('.');
+      if (parts.length != 2) {
+        throw const FormatException('Invalid format. Expected format: YYYY.WW');
+      }
+
+      int year = int.tryParse(parts[0]) ?? 0;
+      int week = int.tryParse(parts[1]) ?? 0;
+
+      if (year < 1 || week < 1 || week > 53) {
+        throw const FormatException('Invalid year or week number.');
+      }
+
+      // Decrement the week, rolling over to the previous year if necessary
+      if (week > 1) {
+        week--;
+      } else {
+        year--;
+        // Check if the previous year has 52 or 53 weeks
+        int weeksInPreviousYear = has53Weeks(year) ? 53 : 52;
+        week = weeksInPreviousYear;
+      }
+
+      return '$year.${week.toString()}';
+    } else {
+      throw UnsupportedError("Only weekYear is supported for now.");
+    }
+  }
+
+  /// Calculates if the [year] has 53 weeks
+  static bool has53Weeks(int year) {
+    // A year has 53 weeks if it starts on Thursday or is a leap year that starts on Wednesday
+    var dec28 = DateTime(year, 12, 28);
+    return dec28.weekday == DateTime.thursday ||
+        (DateTime(year).isLeapYear && dec28.weekday == DateTime.wednesday);
+  }
+}
+
+extension on DateTime {
+  // Helper method to check if a year is a leap year
+  bool get isLeapYear => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 }
