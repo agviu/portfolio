@@ -126,4 +126,24 @@ void main() {
       }
     },
   );
+
+  test('Test dates comparision', () {
+    int comparision;
+    comparision = compareDates('2002.23', '2002.24');
+    if (comparision != -1) {
+      fail('2002.23 is smaller than 2002.24');
+    }
+    comparision = compareDates('2002.25', '2002.24');
+    if (comparision != 1) {
+      fail('2002.25 is greater than 2002.24');
+    }
+    comparision = compareDates('2001.24', '2002.24');
+    if (comparision != -1) {
+      fail('2001.24 is smaller than 2002.24');
+    }
+    comparision = compareDates('2002.24', '2002.24');
+    if (comparision != 0) {
+      fail('2002.24 is equal to 2002.24');
+    }
+  });
 }

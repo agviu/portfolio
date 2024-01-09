@@ -136,3 +136,58 @@ extension on DateTime {
   // Helper method to check if a year is a leap year
   bool get isLeapYear => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 }
+
+/// Compares two dates formatted as 'Number1.Number2' strings.
+///
+/// This function is designed to compare strings that are formatted
+/// with two integers separated by a dot. The comparison is primarily
+/// based on the first integer (Number1). If the first integers are equal,
+/// the second integers (Number2) are compared.
+///
+/// The comparison is numerical, meaning '2002.10' is considered greater
+/// than '2002.9' (contrary to lexicographical string comparison).
+///
+/// Usage:
+/// ```
+/// compareDates('2002.23', '2002.24'); // Returns -1
+/// compareDates('2002.25', '2002.24'); // Returns 1
+/// compareDates('2001.24', '2002.24'); // Returns -1
+/// compareDates('2002.24', '2002.24'); // Returns 0
+/// ```
+///
+/// Arguments:
+/// [date1] : The first formatted string to compare.
+/// [date2] : The second formatted string to compare.
+///
+/// Returns:
+/// An [int] indicating the comparison result:
+/// - A negative number if [date1] is less than [date2].
+/// - Zero if [date1] is equal to [date2].
+/// - A positive number if [date1] is greater than [date2].
+int compareDates(String date1, String date2,
+    {TimeMode mode = TimeMode.yearWeek}) {
+  if (mode == TimeMode.yearWeek) {
+    // Split the strings into parts
+    var parts1 = date1.split('.');
+    var parts2 = date2.split('.');
+
+    // Convert the parts into integers
+    int num1Part1 = int.parse(parts1[0]);
+    int num2Part1 = int.parse(parts2[0]);
+
+    // Compare the first parts
+    if (num1Part1 != num2Part1) {
+      return num1Part1.compareTo(num2Part1);
+    }
+
+    // Convert the parts into integers
+    int num1Part2 = int.parse(parts1[1]);
+    int num2Part2 = int.parse(parts2[1]);
+
+    // If the first parts are equal, compare the second parts
+    return num1Part2.compareTo(num2Part2);
+  } else {
+    // By default, use the standard string comparision.
+    return date1.compareTo(date2);
+  }
+}
