@@ -31,6 +31,47 @@ void main() {
   );
 
   test(
+    "Estimate values",
+    () {
+      if (asset.estimatePriceValue('2024.2') != 200) {
+        fail(
+            "The estimation for 2024.2 is 200, but we got ${asset.estimatePriceValue('2024.2')}");
+      }
+
+      if (asset.estimatePriceValue('2024.4') != 400) {
+        fail(
+            "The estimation for 2024.4 is 400, but we got ${asset.estimatePriceValue('2024.2')}");
+      }
+
+      expect(() => asset.estimatePriceValue('2023.3'), throwsArgumentError);
+      expect(() => asset.estimatePriceValue('2223.3'), throwsArgumentError);
+
+      Asset assetWithEstimations = const Asset(
+        code: 'asset',
+        prices: {
+          '2024.1': AssetPrice(100.0),
+          '2024.3': AssetPrice.estimated(3000.0),
+          '2024.5': AssetPrice(500.0),
+          '2024.7': AssetPrice.estimated(7000.0),
+          '2024.11': AssetPrice(1100.0),
+        },
+      );
+      if (assetWithEstimations.estimatePriceValue('2024.2') != 200) {
+        fail(
+            "The value estimated apparently did not ignored other estimated values");
+      }
+      if (assetWithEstimations.estimatePriceValue('2024.10') != 1000) {
+        fail(
+            "The value estimated apparently did not ignored other estimated values");
+      }
+      if (assetWithEstimations.estimatePriceValue('2024.11') != 1100) {
+        fail(
+            "Estimating a 2024.11, with a real value of 1100, should have returned the same. But received ${assetWithEstimations.estimatePriceValue('2024.11')}");
+      }
+    },
+  );
+
+  test(
     'Asset is created with specific prices',
     () {
       // // Generate sample asset with several prices, which are growing.

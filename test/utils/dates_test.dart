@@ -87,19 +87,19 @@ void main() {
   test(
     'Test getting next week',
     () {
-      String nextWeek = DateUtils().getNextDate('2023.2');
+      String nextWeek = DateUtils.getNextDate('2023.2');
       if (nextWeek != '2023.3') {
         fail('Next week should have been 2023.3, but received $nextWeek');
       }
-      nextWeek = DateUtils().getNextDate('2023.52');
+      nextWeek = DateUtils.getNextDate('2023.52');
       if (nextWeek != '2023.53') {
         fail('Next week should have been 2023.53, but received $nextWeek');
       }
-      nextWeek = DateUtils().getNextDate('2023.53');
+      nextWeek = DateUtils.getNextDate('2023.53');
       if (nextWeek != '2024.1') {
         fail('Next week should have been 2024.1, but received $nextWeek');
       }
-      nextWeek = DateUtils().getNextDate('2022.52');
+      nextWeek = DateUtils.getNextDate('2022.52');
       if (nextWeek != '2023.1') {
         fail('Next week should have been 2023.1, but received $nextWeek');
       }
@@ -109,17 +109,17 @@ void main() {
   test(
     'Test getting previous week',
     () {
-      String previousWeek = DateUtils().getPreviousDate('2023.2');
+      String previousWeek = DateUtils.getPreviousDate('2023.2');
       if (previousWeek != '2023.1') {
         fail(
             'Previous week should have been 2023.1, but received $previousWeek');
       }
-      previousWeek = DateUtils().getPreviousDate('2023.1');
+      previousWeek = DateUtils.getPreviousDate('2023.1');
       if (previousWeek != '2022.52') {
         fail(
             'Previous week should have been 2022.52, but received $previousWeek');
       }
-      previousWeek = DateUtils().getPreviousDate('2024.1');
+      previousWeek = DateUtils.getPreviousDate('2024.1');
       if (previousWeek != '2023.53') {
         fail(
             'Previous week should have been 2023.53, but received $previousWeek');

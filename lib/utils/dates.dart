@@ -59,7 +59,7 @@ class DateUtils {
   /// Returns the next date, considering also swith to next year if needed.
   /// E.g. if [date] is 2023.3, it will return 2023.4.
   /// If it reaches the end of the year, will get the first week of next year.
-  String getNextDate(String date, {TimeMode mode = TimeMode.yearWeek}) {
+  static String getNextDate(String date, {TimeMode mode = TimeMode.yearWeek}) {
     if (mode == TimeMode.yearWeek) {
       var parts = date.split('.');
       if (parts.length != 2) {
@@ -93,7 +93,8 @@ class DateUtils {
   /// Returns the previous date, considering also swith to previous year if needed.
   /// E.g. if [date] is 2023.4, it will return 2023.3.
   /// If it reaches the begining of the year, will get the first week of previous year.
-  String getPreviousDate(String date, {TimeMode mode = TimeMode.yearWeek}) {
+  static String getPreviousDate(String date,
+      {TimeMode mode = TimeMode.yearWeek}) {
     if (mode == TimeMode.yearWeek) {
       var parts = date.split('.');
       if (parts.length != 2) {
