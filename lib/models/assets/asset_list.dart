@@ -27,24 +27,29 @@ class AssetList {
   ///
   /// [date] is the time to check, which depends on [mode]. If [mode] is yearWeek,
   /// then [date] will be something like YEAR.WEEK-YEAR. E.g: 2023.29
-  sortByHigherValueFromDate(String date, [TimeMode mode = TimeMode.yearWeek]) {
+  sortByHigherValueOnDate(String date, [TimeMode mode = TimeMode.yearWeek]) {
     assets.sort(
       (a, b) {
-        if (a.price(date, mode) == null && b.price(date, mode) == null) {
-          return 0;
-        } else if (a.price(date, mode) == null && b.price(date, mode) != null) {
-          return 1;
-        } else if (a.price(date, mode) != null && b.price(date, mode) == null) {
+        if (a.price(date, mode).getValue() > b.price(date, mode).getValue()) {
           return -1;
-        }
-
-        if (a.price(date, mode)! > b.price(date, mode)!) {
-          return -1;
-        } else if (a.price(date, mode)! < b.price(date, mode)!) {
+        } else if (a.price(date, mode).getValue() <
+            b.price(date, mode).getValue()) {
           return 1;
         }
         return 0;
       },
     );
   }
+
+  // sortByGreaterGrowthOnDate(String date, int dateBack,
+  //     [TimeMode mode = TimeMode.yearWeek]) {
+  //   final dates = DateUtils.getLatestsDates(dateBack, mode: mode, from: date);
+  //   final firstDate = dates.first;
+  //   final lastDate = dates.last;
+
+  //   assets.sort((a, b) {
+  //     if (a.price(firstDate) == null && a.price()) {}
+  //     return 0;
+  //   });
+  // }
 }
