@@ -221,4 +221,28 @@ class AssetDate {
 
     throw UnsupportedError("Only yearWeek is supported for now.");
   }
+
+  /// Override of the equality operator.
+  /// Determines if two AssetDate instances are equal based on the _date property.
+  ///
+  /// Args:
+  ///   other (Object): The object to compare with the current instance.
+  ///
+  /// Returns:
+  ///   bool: True if the other object is an AssetDate instance and
+  ///   has the same _date value, false otherwise.
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is AssetDate && other._date == _date;
+  }
+
+  /// Override of the hashCode getter.
+  /// Provides a hash code for an AssetDate instance based on the _date property.
+  ///
+  /// Returns:
+  ///   int: The hash code for the AssetDate instance.
+  @override
+  int get hashCode => _date.hashCode;
 }
