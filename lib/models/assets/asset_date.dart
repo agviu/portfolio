@@ -144,8 +144,8 @@ class AssetDate {
 
     if (mode == TimeMode.yearWeek) {
       List<AssetDate> weeks = [];
-      for (int i = 0; i < numberOfTimes; i++) {
-        weeks.add(_getNewDate(Duration(days: 7 * i)));
+      for (int i = 1; i <= numberOfTimes; i++) {
+        weeks.add(_getNewDate(Duration(days: -7 * i)));
       }
       return weeks;
     } else {
