@@ -1,5 +1,18 @@
 enum TimeMode { yearWeek }
 
+/// Converts a string representation to a TimeMode enumeration.
+///
+/// This function maps specific string values to their corresponding TimeMode values.
+/// Throws an ArgumentError if the input string does not match any TimeMode.
+///
+/// Args:
+///   str (String): The string representation of the TimeMode.
+///
+/// Returns:
+///   TimeMode: The corresponding TimeMode enumeration.
+///
+/// Throws:
+///   ArgumentError: If the input string does not match any TimeMode.
 TimeMode stringToTimeMode(String str) {
   switch (str) {
     case 'year.week':
@@ -9,6 +22,15 @@ TimeMode stringToTimeMode(String str) {
   }
 }
 
+/// Converts a TimeMode enumeration to its string representation.
+///
+/// This function maps specific TimeMode values to their string equivalents.
+///
+/// Args:
+///   mode (TimeMode): The TimeMode enumeration to be converted.
+///
+/// Returns:
+///   String: The string representation of the TimeMode.
 String timeModeToString(TimeMode mode) {
   switch (mode) {
     case TimeMode.yearWeek:
@@ -18,6 +40,17 @@ String timeModeToString(TimeMode mode) {
   }
 }
 
+/// Validates a string based on the specified TimeMode.
+///
+/// This function switches between different TimeMode validation logic.
+/// Currently, it only supports the 'yearWeek' mode.
+///
+/// Args:
+///   mode (TimeMode): The TimeMode enumeration based on which the string will be validated.
+///   str (String): The string to be validated.
+///
+/// Returns:
+///   bool: True if the string is valid for the given TimeMode, otherwise false.
 bool validateTimeMode(TimeMode mode, String str) {
   switch (mode) {
     case TimeMode.yearWeek:
@@ -28,9 +61,15 @@ bool validateTimeMode(TimeMode mode, String str) {
 }
 
 /// Validates the string to be a year.week string.
-/// The year can be between 1900 and current year
-/// The week is an integer between 1 and 53 which is the maximum number of
-/// weeks in a year.
+///
+/// The format is 'YYYY.WW' where YYYY is the year between 1900 and the current year,
+/// and WW is the week number, an integer between 1 and 53 (the maximum number of weeks in a year).
+///
+/// Args:
+///   str (String): The string to be validated.
+///
+/// Returns:
+///   bool: True if the string matches the year.week format and falls within valid ranges.
 bool _validateYearWeekTimeMode(String str) {
   // Regular expression to match the format
   RegExp regExp = RegExp(r'^(\d{4})\.(\d{1,2})$');
