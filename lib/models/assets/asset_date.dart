@@ -245,4 +245,12 @@ class AssetDate {
   ///   int: The hash code for the AssetDate instance.
   @override
   int get hashCode => _date.hashCode;
+
+  /// Override of the toString parent method.
+  ///
+  /// Returns the date, as it is the string representation of this class.
+  @override
+  String toString() {
+    return _date;
+  }
 }

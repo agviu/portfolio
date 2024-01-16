@@ -1,9 +1,35 @@
 import 'package:portfolio/models/category.dart';
 import 'package:portfolio/models/time_mode.dart';
 import 'package:portfolio/models/assets/asset_price.dart';
-import 'package:portfolio/utils/dates.dart';
+import 'package:portfolio/models/assets/asset_date.dart';
+
+/// The `Asset` class represents a financial asset, which could be a cryptocurrency,
+/// stock, commodity, etc. It holds various properties of the asset such as its unique code,
+/// a map of its prices at different dates, its category, and the time mode for its pricing data.
 
 class Asset {
+  /// A unique identifier for the asset, typically a ticker symbol or code.
+  final String code;
+
+  /// A map that associates `AssetDate` objects with their corresponding `AssetPrice`.
+  /// This allows for tracking the price of the asset at various dates.
+  final Map<AssetDate, AssetPrice> prices;
+
+  /// The category of the asset, which defaults to cryptocurrency if not specified.
+  /// This could be expanded to include other categories such as equities, bonds, etc.
+  final Category category;
+
+  /// The mode of time measurement for the asset's pricing data, defaulting to year-week format.
+  /// This determines how the dates in the `prices` map are interpreted.
+  final TimeMode mode;
+
+  /// Constructs an `Asset` with the given properties.
+  ///
+  /// Args:
+  ///   code (String): The unique code or identifier for the asset.
+  ///   prices (Map<AssetDate, AssetPrice>): A map of prices with dates.
+  ///   category (Category): The category of the asset, with a default of `Category.crypto`.
+  ///   mode (TimeMode): The time mode for the asset's pricing data, with a default of `TimeMode.yearWeek`.
   const Asset({
     required this.code,
     required this.prices,
@@ -11,152 +37,195 @@ class Asset {
     this.mode = TimeMode.yearWeek,
   });
 
+  /// A factory constructor for creating a new `Asset` instance from a JSON map.
+  ///
+  /// This constructor is used to deserialize a JSON object that contains the asset's data,
+  /// including its code, prices at different dates, category, and time mode.
+  ///
+  /// Args:
+  ///   jsonContent (Map<String, dynamic>): The JSON map containing the asset data.
+  ///
+  /// Returns:
+  ///   Asset: A new `Asset` instance populated with data from the JSON map.
   factory Asset.fromJson(Map<String, dynamic> jsonContent) {
+    // Parse the price list from the JSON content.
+    // It is assumed that 'prices' is a list of maps containing date and price information.
     var priceList = jsonContent['prices'] as List;
-    Map<String, AssetPrice> pricesMap = {};
+    Map<AssetDate, AssetPrice> pricesMap = {};
 
     final TimeMode mode;
 
+    // Check if 'mode' is provided in the JSON, otherwise use the default value.
     if (jsonContent.containsKey('mode') && jsonContent['mode'] != null) {
       mode = stringToTimeMode(jsonContent['mode']);
     } else {
-      // Default value.
+      // Default time mode if not specified in the JSON.
       mode = TimeMode.yearWeek;
     }
 
+    // Convert each price data in the list to an entry in the prices map.
     for (var pricesData in priceList) {
-      // Add to the map
-      // pricesMap[pricesData[timeModeToString(mode)]] =
-      //     pricesData["value"].toDouble();
-      pricesMap[pricesData[timeModeToString(mode)]] =
+      pricesMap[AssetDate(pricesData[timeModeToString(mode)])] =
           AssetPrice(pricesData["value"].toDouble(), mode: mode);
     }
 
+    // Create a new Asset instance using the parsed data.
     return Asset(
-      code: jsonContent['code'],
-      prices: pricesMap,
-      category: stringToCategory(jsonContent['category']),
-      mode: mode,
+      code: jsonContent['code'], // The asset's code.
+      prices: pricesMap, // The map of prices.
+      category:
+          stringToCategory(jsonContent['category']), // The asset's category.
+      mode: mode, // The time mode for the asset's pricing data.
     );
   }
 
-  final String code;
-
-  final Map<String, AssetPrice> prices;
-
-  final Category category;
-
-  final TimeMode mode;
-
-  AssetPrice price(String date, [TimeMode mode = TimeMode.yearWeek]) {
-    if (prices[date] == null) {
-      prices[date] = AssetPrice.estimated(estimatePriceValue(date));
-    }
-
-    return prices[date]!;
-  }
-
-  /// Estimates the price value for a given date based on historical data.
+  /// Retrieves the price of the asset for a given date. If the price for the specified
+  /// date is not available, an estimated price is calculated, stored, and returned.
   ///
-  /// This function estimates the price value by calculating an average value
-  /// between the closest known values before and after the provided date.
-  /// It uses the `getHighestDateWithRealValue` and `getLowestDateWithRealValue`
-  /// functions to determine the range of dates for which data is available.
-  ///
-  /// The function iterates through the dates, moving both forwards and backwards
-  /// from the given date, until it finds the closest real values (non-null and valid)
-  /// in the historical data. It then calculates an estimated value based on these.
-  ///
-  /// Throws:
-  /// - [ArgumentError] if the provided date is higher than the highest known date
-  ///   with a real value or lower than the lowest known date with a real value.
-  ///
-  /// Usage:
-  /// ```
-  /// double estimatedPrice = estimatePriceValue('2024.03');
-  /// ```
-  ///
-  /// Arguments:
-  /// - [date] : The date for which the price value is to be estimated. The date
-  ///   should be in a format recognized by `DateUtils.getNextDate` and
-  ///   `DateUtils.getPreviousDate`.
+  /// Args:
+  ///   assetDate (AssetDate): The date for which the price is requested.
+  ///   mode (TimeMode): [Optional] The time mode to be used. Defaults to `TimeMode.yearWeek`
+  ///                    if not provided. Currently, this parameter is not used within the method,
+  ///                    but it could be relevant for future enhancements or overloads.
   ///
   /// Returns:
-  /// A [double] representing the estimated price value for the given date.
-  double estimatePriceValue(date) {
+  ///   AssetPrice: The price of the asset at the given date. This can be a previously
+  ///   stored price or an estimated price if no price was stored for that date.
+  AssetPrice price(AssetDate assetDate, [TimeMode mode = TimeMode.yearWeek]) {
+    // Check if the price for the given date is already available in the prices map.
+    if (prices[assetDate] == null) {
+      // If not available, estimate the price, store it in the map, and then return it.
+      // The estimatePriceValue method would be responsible for calculating the estimated price.
+      prices[assetDate] = AssetPrice.estimated(estimatePriceValue(assetDate));
+    }
+
+    // Return the price for the given date, which is now guaranteed to be non-null.
+    // The `!` operator is used to cast away nullability, as we're sure there's a value after the check above.
+    return prices[assetDate]!;
+  }
+
+  /// Estimates the price value for the given asset date.
+  /// The estimation is based on linear interpolation between the known real prices
+  /// before and after the given date. It assumes that the price changes linearly over time.
+  ///
+  /// Throws:
+  ///   - ArgumentError if the provided date is beyond the range of known real prices.
+  ///
+  /// Args:
+  ///   assetDate (AssetDate): The date for which the price is to be estimated.
+  ///
+  /// Returns:
+  ///   double: The estimated price value for the given date.
+  double estimatePriceValue(AssetDate assetDate) {
+    // First, identify the highest date with a real value that we have recorded.
     final highestDate = getHighestDateWithRealValue();
-    if (compareDates(date, highestDate) > 0) {
+    // If the given date is beyond the highest date with a real value, throw an error.
+    if (assetDate.dateTime.compareTo(highestDate.dateTime) > 0) {
       throw ArgumentError(
-          "The provided date is higher than expected and we cannot give an estimation: $date");
+          "The provided date is higher than expected and we cannot give an estimation: $assetDate");
     }
 
+    // Similarly, identify the lowest date with a real value.
     final lowestDate = getLowestDateWithRealValue();
-    if (compareDates(date, lowestDate) < 0) {
+    // If the given date is before the lowest date with a real value, throw an error.
+    if (assetDate.dateTime.compareTo(lowestDate.dateTime) < 0) {
       throw ArgumentError(
-          "The provided date is lower than expected and we cannot give an estimation: $date");
+          "The provided date is lower than expected and we cannot give an estimation: $assetDate");
     }
 
-    // Get the next value in the future, if it exists.
+    // Count how many periods we have to go up to reach the next real value in the future.
     int upHops = 0;
-    String nextDate = date;
+    AssetDate nextDate = assetDate;
+    // Iterate through the dates until we find a real value or reach the highest known date.
     while (nextDate != highestDate) {
       upHops++;
-      nextDate = DateUtils.getNextDate(nextDate);
+      nextDate = nextDate.getNextDate();
+      // Check if the next date has a real price recorded, if so, break the loop.
       if (prices[nextDate] != null && prices[nextDate]!.isReal()) {
         break;
       }
     }
 
+    // Similarly, count how many periods we have to go down to reach the previous real value.
     int downHops = 0;
-    String previousDate = date;
+    AssetDate previousDate = assetDate;
+    // Iterate through the dates until we find a real value or reach the lowest known date.
     while (previousDate != lowestDate) {
       downHops++;
-      previousDate = DateUtils.getPreviousDate(previousDate);
+      previousDate = previousDate.getPreviousDate();
+      // Check if the previous date has a real price recorded, if so, break the loop.
       if (prices[previousDate] != null && prices[previousDate]!.isReal()) {
         break;
       }
     }
 
-    // Calculate the average value between previousDate and nextDate.
+    // Retrieve the real values for the next and previous dates.
     double upValue = prices[nextDate]!.getRealValue()!;
     double downValue = prices[previousDate]!.getRealValue()!;
-    double estimatedValue;
 
-    estimatedValue =
+    // Perform linear interpolation to estimate the value for the given date.
+    double estimatedValue =
         ((upValue - downValue) / (upHops + downHops)) * downHops + downValue;
 
     return estimatedValue;
   }
 
-  /// Gets the highest (recent in time) date that contains real price information.
-  String getHighestDateWithRealValue() {
+  /// Gets the most recent date with real price information.
+  ///
+  /// This method iterates through the keys of the `prices` map, which are `AssetDate` objects,
+  /// and identifies the one that represents the most recent date (i.e., the highest date)
+  /// with real price information.
+  ///
+  /// Throws:
+  ///   - StateError if the `prices` map is empty and no date can be returned.
+  ///
+  /// Returns:
+  ///   AssetDate: The most recent `AssetDate` that contains real price data.
+  AssetDate getHighestDateWithRealValue() {
+    // Check if the prices map is empty and throw an error if so.
     if (prices.isEmpty) {
       throw StateError("The prices map is empty.");
     }
 
-    String highestKey = prices.keys.first;
-    for (String key in prices.keys) {
-      if (compareDates(key, highestKey) > 0) {
+    // Start with the first date as the highest and compare with others to find the most recent.
+    AssetDate highestKey = prices.keys.first;
+    for (AssetDate key in prices.keys) {
+      // If the current key is more recent than the stored highest, update the highest.
+      if (key.dateTime.compareTo(highestKey.dateTime) > 0) {
         highestKey = key;
       }
     }
 
+    // Return the date that is the most recent.
     return highestKey;
   }
 
-  /// Gets the lowest (oldest in time) date that contains real price information.
-  String getLowestDateWithRealValue() {
+  /// Gets the oldest date with real price information.
+  ///
+  /// Similar to `getHighestDateWithRealValue`, this method goes through the `prices` map
+  /// to find the `AssetDate` that is the oldest (i.e., the lowest date) with real price data.
+  ///
+  /// Throws:
+  ///   - StateError if the `prices` map is empty and no date can be returned.
+  ///
+  /// Returns:
+  ///   AssetDate: The oldest `AssetDate` that contains real price data.
+  AssetDate getLowestDateWithRealValue() {
+    // Ensure there are prices to evaluate, otherwise throw an error.
     if (prices.isEmpty) {
       throw StateError("The prices map is empty.");
     }
 
-    String lowestKey = prices.keys.first;
-    for (String key in prices.keys) {
-      if (compareDates(key, lowestKey) < 0) {
+    // Initialize the lowest date as the first key and search for any older dates.
+    AssetDate lowestKey = prices.keys.first;
+    for (AssetDate key in prices.keys) {
+      // If a key is older than the current lowest, it becomes the new lowest.
+      if (key.dateTime.compareTo(lowestKey.dateTime) < 0) {
         lowestKey = key;
       }
     }
 
+    // After checking all keys, return the oldest date.
     return lowestKey;
   }
 }

@@ -40,4 +40,14 @@ class AssetPrice {
   String toString() {
     return getValue().toString();
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AssetPrice &&
+          runtimeType == other.runtimeType &&
+          getValue() == other.getValue();
+
+  @override
+  int get hashCode => getValue().hashCode;
 }
