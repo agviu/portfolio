@@ -1,17 +1,20 @@
-import 'package:portfolio/models/time_mode.dart';
-
+/// Represents the price of an asset, which can be either real or estimated.
 class AssetPrice {
-  const AssetPrice(this.realValue, {this.mode = TimeMode.yearWeek})
-      : estimatedValue = null;
+  /// Constructor for a real asset price.
+  const AssetPrice(this.realValue) : estimatedValue = null;
 
-  const AssetPrice.estimated(this.estimatedValue,
-      {this.mode = TimeMode.yearWeek})
-      : realValue = null;
+  /// Constructor for an estimated asset price.
+  const AssetPrice.estimated(this.estimatedValue) : realValue = null;
 
+  /// The real value of the asset price, can be null if it's estimated.
   final double? realValue;
-  final double? estimatedValue;
-  final TimeMode mode;
 
+  /// The estimated value of the asset price, can be null if it's real.
+  final double? estimatedValue;
+
+  /// Get the value of the asset price, either real or estimated.
+  ///
+  /// Throws a [StateError] if the asset price contains neither real nor estimated value.
   double getValue() {
     if (isReal()) {
       return realValue!;
@@ -20,18 +23,21 @@ class AssetPrice {
       return estimatedValue!;
     } else {
       throw StateError(
-          "The asset price did not contain a real neither an estimated value.");
+          "The asset price did not contain a real nor an estimated value.");
     }
   }
 
+  /// Get the real value of the asset price.
   double? getRealValue() {
     return realValue;
   }
 
+  /// Check if the asset price is real (contains a real value).
   bool isReal() {
     return realValue != null && estimatedValue == null;
   }
 
+  /// Check if the asset price is estimated (contains an estimated value).
   bool isEstimated() {
     return estimatedValue != null && realValue == null;
   }

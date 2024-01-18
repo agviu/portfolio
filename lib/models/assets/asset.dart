@@ -66,7 +66,7 @@ class Asset {
     // Convert each price data in the list to an entry in the prices map.
     for (var pricesData in priceList) {
       pricesMap[AssetDate(pricesData[timeModeToString(mode)])] =
-          AssetPrice(pricesData["value"].toDouble(), mode: mode);
+          AssetPrice(pricesData["value"].toDouble());
     }
 
     // Create a new Asset instance using the parsed data.
