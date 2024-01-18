@@ -1,4 +1,6 @@
 import 'package:portfolio/models/assets/asset.dart';
+import 'package:portfolio/models/assets/asset_date.dart';
+import 'package:portfolio/models/assets/asset_price.dart';
 import 'package:flutter/material.dart';
 
 class AssetPricesWidget extends StatelessWidget {
@@ -6,7 +8,7 @@ class AssetPricesWidget extends StatelessWidget {
 
   final Asset asset;
 
-  final Map<String, double> prices;
+  final Map<AssetDate, AssetPrice> prices;
 
   @override
   Widget build(BuildContext context) {

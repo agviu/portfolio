@@ -84,14 +84,11 @@ class Asset {
   ///
   /// Args:
   ///   assetDate (AssetDate): The date for which the price is requested.
-  ///   mode (TimeMode): [Optional] The time mode to be used. Defaults to `TimeMode.yearWeek`
-  ///                    if not provided. Currently, this parameter is not used within the method,
-  ///                    but it could be relevant for future enhancements or overloads.
   ///
   /// Returns:
   ///   AssetPrice: The price of the asset at the given date. This can be a previously
   ///   stored price or an estimated price if no price was stored for that date.
-  AssetPrice price(AssetDate assetDate, [TimeMode mode = TimeMode.yearWeek]) {
+  AssetPrice price(AssetDate assetDate) {
     // Check if the price for the given date is already available in the prices map.
     if (prices[assetDate] == null) {
       // If not available, estimate the price, store it in the map, and then return it.
