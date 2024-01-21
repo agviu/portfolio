@@ -45,9 +45,8 @@ void main() {
 
       // Get the list of assets sorted by the asset that had grown more in a given date:
       assetList.sortAssetsByGrowthSinceDate(AssetDate("2023.48"), 1);
-      assetList.assets.forEach((element) {
-        print(element.code);
-      });
+      // assetList.assets.forEach((element) => print(element.code));
+
       if (assetList.assets.first.code != 'SHIB') {
         fail(
             "SHIB is the asset that did grow more in the last week from 2023.48");

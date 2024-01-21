@@ -1,6 +1,5 @@
 import 'package:portfolio/models/assets/asset.dart';
 import 'dart:convert';
-import 'package:portfolio/models/time_mode.dart';
 import 'package:portfolio/models/assets/asset_date.dart';
 
 /// Represents a list of assets.
