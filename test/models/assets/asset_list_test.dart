@@ -53,8 +53,17 @@ void main() {
       }
 
       // Get the list of assets sorted by the asset that had grown more in the last month:
-
+      assetList.sortAssetsByGrowthSinceDate(AssetDate("2023.48"), 4);
+      // assetList.assets.forEach((element) => print(element.code));
+      if (assetList.assets[2].code != 'BNB') {
+        fail("In the last 4 weeks, BNB was the third asset that growed more");
+      }
       // Get the list of assets sorted by the asset that had grown more in the last months:
+      assetList.sortAssetsByGrowthSinceDate(AssetDate("2023.48"), 12);
+      // assetList.assets.forEach((element) => print(element.code));
+      if (assetList.assets.last.code != 'BTC') {
+        fail("In the last 12 weeks, BTC was the asset that growth the less");
+      }
     },
   );
 }
