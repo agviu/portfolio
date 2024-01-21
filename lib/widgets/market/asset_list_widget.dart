@@ -9,7 +9,7 @@ class AssetListWidget extends StatefulWidget {
   final AssetList assetList;
 
   @override
-  _AssetListWidgetState createState() => _AssetListWidgetState();
+  State<AssetListWidget> createState() => _AssetListWidgetState();
 }
 
 class _AssetListWidgetState extends State<AssetListWidget> {
