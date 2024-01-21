@@ -15,17 +15,33 @@ class AssetPricesWidget extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(asset.code)),
       body: ListView.builder(
-          itemCount: prices.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: Row(
-                children: [
-                  // Text(prices[index]!.time),
-                  // Text(prices[index]!.value.toString()),
-                ],
-              ),
-            );
-          }),
+        itemCount: prices.length,
+        itemBuilder: (BuildContext context, int index) {
+          AssetDate date = prices.keys.elementAt(index);
+          AssetPrice price = prices.values.elementAt(index);
+
+          return Card(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(date.toString()), // Display the date
+                Text(_formatPrice(price)), // Display the price
+              ],
+            ),
+          );
+        },
+      ),
     );
+  }
+
+  String _formatPrice(AssetPrice price) {
+    // Check if the price is real or estimated and format accordingly
+    if (price.isReal()) {
+      return 'Real: \$${price.getRealValue()}';
+    } else if (price.isEstimated()) {
+      return 'Estimated: \$${price.estimatedValue}';
+    } else {
+      return 'Unknown';
+    }
   }
 }

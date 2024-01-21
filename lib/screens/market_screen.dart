@@ -8,15 +8,16 @@ class MarketScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Market'),
-        ),
-        body: const Column(
-          children: [
-            Expanded(
-              child: MarketList(),
-            ),
-          ],
-        ));
+      appBar: AppBar(
+        title: const Text('Market'),
+      ),
+      body: const Column(
+        children: [
+          Expanded(
+            child: AssetListWidget(),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -19,14 +19,14 @@ void main() {
   test(
     "Get highest and lower dates with real value for an Asset.",
     () {
-      if (asset.getHighestDateWithRealValue().toString() != '2024.11') {
+      if (asset.getLatestDateWithRealValue().toString() != '2024.11') {
         fail(
-            "The highest date is 2024.11, but we got ${asset.getHighestDateWithRealValue()}");
+            "The highest date is 2024.11, but we got ${asset.getLatestDateWithRealValue()}");
       }
 
-      if (asset.getLowestDateWithRealValue().toString() != '2024.1') {
+      if (asset.getOldestDateWithRealValue().toString() != '2024.1') {
         fail(
-            "The lowest date is 2024.1, but we got ${asset.getLowestDateWithRealValue()}");
+            "The lowest date is 2024.1, but we got ${asset.getOldestDateWithRealValue()}");
       }
     },
   );

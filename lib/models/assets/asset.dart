@@ -115,7 +115,7 @@ class Asset {
   ///   double: The estimated price value for the given date.
   double estimatePriceValue(AssetDate assetDate) {
     // First, identify the highest date with a real value that we have recorded.
-    final highestDate = getHighestDateWithRealValue();
+    final highestDate = getLatestDateWithRealValue();
     // If the given date is beyond the highest date with a real value, throw an error.
     if (assetDate.dateTime.compareTo(highestDate.dateTime) > 0) {
       throw ArgumentError(
@@ -123,7 +123,7 @@ class Asset {
     }
 
     // Similarly, identify the lowest date with a real value.
-    final lowestDate = getLowestDateWithRealValue();
+    final lowestDate = getOldestDateWithRealValue();
     // If the given date is before the lowest date with a real value, throw an error.
     if (assetDate.dateTime.compareTo(lowestDate.dateTime) < 0) {
       throw ArgumentError(
@@ -178,7 +178,7 @@ class Asset {
   ///
   /// Returns:
   ///   AssetDate: The most recent `AssetDate` that contains real price data.
-  AssetDate getHighestDateWithRealValue() {
+  AssetDate getLatestDateWithRealValue() {
     // Check if the prices map is empty and throw an error if so.
     if (prices.isEmpty) {
       throw StateError("The prices map is empty.");
@@ -207,7 +207,7 @@ class Asset {
   ///
   /// Returns:
   ///   AssetDate: The oldest `AssetDate` that contains real price data.
-  AssetDate getLowestDateWithRealValue() {
+  AssetDate getOldestDateWithRealValue() {
     // Ensure there are prices to evaluate, otherwise throw an error.
     if (prices.isEmpty) {
       throw StateError("The prices map is empty.");
