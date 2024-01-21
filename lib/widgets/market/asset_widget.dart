@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/models/assets/asset.dart';
-import 'package:portfolio/widgets/market/asset_prices.dart';
+import 'package:portfolio/widgets/market/asset_prices_widget.dart';
 
-class AssetItemWidget extends StatelessWidget {
-  const AssetItemWidget({super.key, required this.asset});
+class AssetWidget extends StatelessWidget {
+  const AssetWidget({super.key, required this.asset});
 
   final Asset asset;
 
