@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:portfolio/models/assets/asset.dart';
+import 'package:portfolio/models/assets/asset_date.dart';
+import 'package:portfolio/models/assets/asset_price.dart';
 import 'package:portfolio/models/category.dart';
 import 'package:portfolio/models/time_mode.dart';
 import 'package:portfolio/widgets/market/asset_widget.dart';
 
 void main() {
   // Create a test asset
-  Asset testAsset = const Asset(
+  Asset testAsset = Asset(
     code: 'TEST',
-    prices: {}, // Add test data for prices
+    prices: {
+      AssetDate('2023.1'): const AssetPrice(100.0),
+      AssetDate('2023.21'): const AssetPrice.estimated(120.0),
+      AssetDate('2023.31'): const AssetPrice(140.0),
+    }, // Add test data for prices
     category:
         Category.crypto, // Example category, replace with actual enum value
     mode:
@@ -31,9 +37,7 @@ void main() {
 
       // Verify that the asset's code is displayed
       expect(find.text('TEST'), findsOneWidget);
-
-      // Add more expects to verify other parts of your widget
-      // For example, category and time mode display
+      expect(find.text('Latest Price: 140.00'), findsOneWidget);
     },
   );
 

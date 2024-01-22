@@ -60,7 +60,7 @@ class AssetWidget extends StatelessWidget {
       // Display the latest price info
       var latestDate = asset.getLatestDateWithRealValue();
       var latestPrice = asset.prices[latestDate];
-
+      print(latestPrice?.getValue().toStringAsFixed(2));
       return Text(
         'Latest Price: ${latestPrice?.getValue().toStringAsFixed(2)}', // Format the price
         style: const TextStyle(fontSize: 16.0),
