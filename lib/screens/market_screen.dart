@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/models/assets/asset_date.dart';
 import 'package:portfolio/models/assets/asset_list.dart';
 import 'package:portfolio/widgets/market/asset_list_widget.dart';
 import 'package:flutter/services.dart';
@@ -59,7 +60,10 @@ class _MarketScreenState extends State<MarketScreen> {
               ? Center(child: Text(errorMessage!))
               : RefreshIndicator(
                   onRefresh: _fetchAssets,
-                  child: AssetListWidget(assetList: assetList),
+                  child: AssetListWidget(
+                    assetList: assetList,
+                    initialDate: AssetDate.dateTime(DateTime.now()),
+                  ),
                 ),
     );
   }

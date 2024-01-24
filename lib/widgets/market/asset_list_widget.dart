@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/models/assets/asset.dart';
+import 'package:portfolio/models/assets/asset_date.dart';
 import 'package:portfolio/models/assets/asset_list.dart';
 import 'package:portfolio/widgets/market/asset_widget.dart';
 
 class AssetListWidget extends StatefulWidget {
-  const AssetListWidget({super.key, required this.assetList});
+  const AssetListWidget(
+      {super.key, required this.assetList, required this.initialDate});
 
   final AssetList assetList;
+
+  final AssetDate initialDate;
 
   @override
   State<AssetListWidget> createState() => _AssetListWidgetState();
 }
 
 class _AssetListWidgetState extends State<AssetListWidget> {
-  late List<Asset> assets;
+  late AssetList assetList;
+  late AssetDate initialDate;
 
   @override
   void initState() {
     super.initState();
-    assets = widget.assetList.assets;
-    // Optionally, you can sort assets on initialization
-    // For example: sort by higher value on a specific date
-    // assets.sortByHigherValueOnDate(someDate);
+    initialDate = widget.initialDate;
+    assetList = widget.assetList.sortByHigherValueOnDate(initialDate);
   }
 
   @override
@@ -30,27 +32,48 @@ class _AssetListWidgetState extends State<AssetListWidget> {
       appBar: AppBar(
         title: const Text('Market List'),
         actions: [
-          // You can add buttons or actions to sort the list based on different criteria
-          IconButton(
-            icon: const Icon(Icons.sort),
-            onPressed: _sortAssets, // Implement this method to sort assets
+          PopupMenuButton<String>(
+            onSelected: (String value) {
+              // Handle the action based on the selected value
+              if (value == 'sortHigherGrowthLastWeek') {
+                _sortAssetsByGrowthSinceDate(1);
+              } else if (value == 'sortHigherGrowthLastMonth') {
+                _sortAssetsByGrowthSinceDate(4);
+              } else if (value == 'sortHigherGrowthLastQuarter') {
+                _sortAssetsByGrowthSinceDate(12);
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'sortHigherGrowthLastWeek',
+                child: Text('Higher Growth Last Week'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'sortHigherGrowthLastMonth',
+                child: Text('Higher Growth Last Month'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'sortHigherGrowthLastQuarter',
+                child: Text('Higher Growth Last Quarter'),
+              ),
+            ],
           ),
         ],
       ),
       body: ListView.builder(
-        itemCount: assets.length,
+        itemCount: assetList.length,
         itemBuilder: (BuildContext context, int index) {
-          return AssetWidget(asset: assets[index]);
+          return AssetWidget(asset: assetList.assets[index]);
         },
       ),
     );
   }
 
-  void _sortAssets() {
-    // Implement the sorting logic based on your needs
-    // For example, you might want to show a dialog to choose the sorting criteria
-    // setState(() {
-    //   assets.sortByHigherValueOnDate(someDate);
-    // });
+  void _sortAssetsByGrowthSinceDate(int dateTimes) {
+    setState(
+      () {
+        assetList.sortAssetsByGrowthSinceDate(initialDate, dateTimes);
+      },
+    );
   }
 }

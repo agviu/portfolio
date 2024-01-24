@@ -9,9 +9,9 @@ void main() {
       var jsonFile = 'test/models/assets/valid_assets_list.json';
       String jsonContent = await File(jsonFile).readAsString();
       final AssetList assetList = AssetList.fromJson(jsonContent);
-      if (assetList.length() != 7) {
+      if (assetList.length != 7) {
         fail(
-            "The number of assets in the JSON is 7, but ${assetList.length()} was read.");
+            "The number of assets in the JSON is 7, but ${assetList.length} was read.");
       }
     } catch (e) {
       fail(

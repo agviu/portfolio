@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:portfolio/models/assets/asset.dart';
+import 'package:portfolio/models/assets/asset_date.dart';
 import 'package:portfolio/models/assets/asset_list.dart';
 import 'package:portfolio/widgets/market/asset_list_widget.dart';
 import 'package:portfolio/widgets/market/asset_widget.dart';
@@ -28,7 +29,10 @@ void main() {
       (WidgetTester tester) async {
     // Build our app and trigger a frame
     await tester.pumpWidget(MaterialApp(
-      home: AssetListWidget(assetList: assetList),
+      home: AssetListWidget(
+        assetList: assetList,
+        initialDate: AssetDate.dateTime(DateTime.now()),
+      ),
     ));
 
     // Verify that each asset's code is displayed

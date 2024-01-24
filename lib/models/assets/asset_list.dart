@@ -24,9 +24,7 @@ class AssetList {
   List<Asset> assets;
 
   /// Method to get the length (number of assets) in the AssetList.
-  int length() {
-    return assets.length;
-  }
+  int get length => assets.length;
 
   /// Sorts the [assets] list. The first item [0] will be the Asset with the higher value
   /// for the given date. The last item [assets.length] will be the Asset with the
