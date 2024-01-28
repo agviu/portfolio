@@ -23,7 +23,7 @@ class _AssetListWidgetState extends State<AssetListWidget> {
   void initState() {
     super.initState();
     initialDate = widget.initialDate;
-    assetList = widget.assetList.sortByHigherValueOnDate(initialDate);
+    assetList = widget.assetList;
   }
 
   @override
@@ -63,7 +63,10 @@ class _AssetListWidgetState extends State<AssetListWidget> {
       body: ListView.builder(
         itemCount: assetList.length,
         itemBuilder: (BuildContext context, int index) {
-          return AssetWidget(asset: assetList.assets[index]);
+          return AssetWidget(
+            asset: assetList.assets[index],
+            key: ValueKey(assetList.assets[index].code),
+          );
         },
       ),
     );
