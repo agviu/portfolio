@@ -17,6 +17,8 @@ class AssetListWidget extends StatefulWidget {
 
 class _AssetListWidgetState extends State<AssetListWidget> {
   late AssetList assetList;
+  late AssetList displayAssetList;
+  late AssetList discardedAssetList;
   late AssetDate initialDate;
 
   @override
@@ -24,10 +26,14 @@ class _AssetListWidgetState extends State<AssetListWidget> {
     super.initState();
     initialDate = widget.initialDate;
     assetList = widget.assetList;
+    discardedAssetList = AssetList([]);
+    displayAssetList = AssetList(assetList.assets);
   }
 
   @override
   Widget build(BuildContext context) {
+    // print("We will display ${displayAssetList.length} assets");
+    // print("We have discarded ${discardedAssetList.length} assets");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Market List'),
@@ -61,11 +67,11 @@ class _AssetListWidgetState extends State<AssetListWidget> {
         ],
       ),
       body: ListView.builder(
-        itemCount: assetList.length,
+        itemCount: displayAssetList.length,
         itemBuilder: (BuildContext context, int index) {
           return AssetWidget(
-            asset: assetList.assets[index],
-            key: ValueKey(assetList.assets[index].code),
+            asset: displayAssetList.assets[index],
+            key: ValueKey(displayAssetList.assets[index].code),
           );
         },
       ),
@@ -75,7 +81,13 @@ class _AssetListWidgetState extends State<AssetListWidget> {
   void _sortAssetsByGrowthSinceDate(int dateTimes) {
     setState(
       () {
-        assetList.sortAssetsByGrowthSinceDate(initialDate, dateTimes);
+        AssetList filtered, discarded;
+
+        (filtered, discarded) =
+            assetList.sortAssetsByGrowthSinceDate(initialDate, dateTimes);
+
+        displayAssetList = filtered;
+        discardedAssetList = discarded;
       },
     );
   }
