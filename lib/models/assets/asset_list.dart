@@ -32,8 +32,10 @@ class AssetList {
   ///
   /// [date] is the time to check, which depends on [mode]. If [mode] is yearWeek,
   /// then [date] will be something like YEAR.WEEK-YEAR. E.g: 2023.29
-  sortByHigherValueOnDate(AssetDate assetDate) {
-    assets.sort(
+  (AssetList, AssetList) sortByHigherValueOnDate(AssetDate assetDate) {
+    var (List<Asset> filtered, List<Asset> discarded) =
+        _filterAssetsByDates(assets, [assetDate]);
+    filtered.sort(
       (a, b) {
         if (a.price(assetDate).getValue() > b.price(assetDate).getValue()) {
           return -1;
@@ -44,6 +46,8 @@ class AssetList {
         return 0;
       },
     );
+
+    return (AssetList(filtered), AssetList(discarded));
   }
 
   /// Sorts a list of assets by their growth in value since a specific date.
@@ -64,11 +68,15 @@ class AssetList {
   /// // Example: Sort assets based on their growth over the past 10 weeks from a specific date.
   /// sortAssetsByGrowthSinceDate('2023.10', 10);
   /// ```
-  sortAssetsByGrowthSinceDate(AssetDate firstDate, int dateBack) {
+  (AssetList, AssetList) sortAssetsByGrowthSinceDate(
+      AssetDate firstDate, int dateBack) {
     final dates = firstDate.getLatestsDates(dateBack);
     final lastDate = dates.last;
 
-    assets.sort(
+    var (List<Asset> filtered, List<Asset> discarded) =
+        _filterAssetsByDates(assets, dates);
+
+    filtered.sort(
       (a, b) {
         var aDifference =
             a.price(firstDate).getValue() - a.price(lastDate).getValue();
@@ -95,5 +103,48 @@ class AssetList {
         return 0;
       },
     );
+
+    return (AssetList(filtered), AssetList(discarded));
+  }
+
+  (List<Asset>, List<Asset>) _filterAssetsByDates(
+      List<Asset> originalList, List<AssetDate> assetDateList) {
+    final List<Asset> filtered = [];
+    final List<Asset> discarded = [];
+    final AssetDate firstDate = assetDateList.first;
+    final AssetDate lastDate = assetDateList.last;
+
+    // Clone the original list.
+    filtered.addAll(originalList);
+    for (var asset in originalList) {
+      try {
+        asset.price(firstDate);
+      } catch (e) {
+        if (e is ArgumentError) {
+          // Remove asset from list
+          filtered.remove(asset);
+          discarded.add(asset);
+          continue;
+        } else {
+          rethrow;
+        }
+      }
+
+      if (firstDate != lastDate) {
+        try {
+          asset.price(lastDate);
+        } catch (e) {
+          if (e is ArgumentError) {
+            // Remove asset from list
+            filtered.remove(asset);
+            discarded.add(asset);
+          } else {
+            rethrow;
+          }
+        }
+      }
+    }
+
+    return (filtered, discarded);
   }
 }
