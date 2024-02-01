@@ -1,4 +1,3 @@
-import 'package:portfolio/models/assets/asset.dart';
 import 'package:portfolio/models/assets/asset_list.dart';
 import 'package:portfolio/models/assets/asset_date.dart';
 import 'package:test/test.dart';

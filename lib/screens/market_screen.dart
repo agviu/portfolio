@@ -64,7 +64,7 @@ class _MarketScreenState extends State<MarketScreen> {
                     assetList: assetList,
                     // initialDate: AssetDate.dateTime(DateTime.now()),
                     //@todo: This is just for a test, return to normal
-                    initialDate: AssetDate("2023.1"),
+                    initialDate: AssetDate("2023.48"),
                   ),
                 ),
     );

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:portfolio/models/assets/asset.dart';
@@ -8,6 +6,7 @@ import 'package:portfolio/models/assets/asset_list.dart';
 import 'package:portfolio/models/assets/asset_price.dart';
 import 'package:portfolio/widgets/market/asset_list_widget.dart';
 import 'package:portfolio/widgets/market/asset_widget.dart';
+import 'dart:io';
 
 void main() {
   // Create mock assets
@@ -76,13 +75,24 @@ void main() {
     },
   );
 
+  String jsonContent = '';
+
+  setUpAll(
+    () async {
+      var jsonFile = 'test/models/assets/valid_assets_list.json';
+      jsonContent = await File(jsonFile).readAsString();
+    },
+  );
+
   testWidgets(
     'Check that asset list is sorted by max growth in the last week when the sort button is pressed',
     (WidgetTester tester) async {
+      final AssetList assetList = AssetList.fromJson(jsonContent);
+
       await tester.pumpWidget(
         MaterialApp(
           home: AssetListWidget(
-              assetList: assetList, initialDate: AssetDate('2023.12')),
+              assetList: assetList, initialDate: AssetDate("2023.48")),
         ),
       );
 
@@ -94,27 +104,24 @@ void main() {
       await tester.tap(find.text('Higher Growth Last Week'));
       await tester.pumpAndSettle();
 
-      var finderWidget = find.byKey(const ValueKey('ASSET2'));
-      // Check that the sort happened.
-      await tester.scrollUntilVisible(
-        finderWidget,
-        1,
-        scrollable: find.byType(Scrollable),
-      );
+      // Check that it is the very first:
+      var firstWidgetInList = find.byType(AssetWidget).first;
+      var foundWidget = tester.widget(firstWidgetInList);
+      var key = foundWidget.key;
 
-      expect(finderWidget, findsOneWidget);
+      expect(const ValueKey('SHIB').toString(), key.toString());
     },
   );
 
   testWidgets(
     'Check that asset list is sorted by max growth in the last month when the sort button is pressed',
     (WidgetTester tester) async {
+      final AssetList assetList = AssetList.fromJson(jsonContent);
+
       await tester.pumpWidget(
         MaterialApp(
           home: AssetListWidget(
-            assetList: assetList,
-            initialDate: AssetDate('2023.12'),
-          ),
+              assetList: assetList, initialDate: AssetDate("2023.48")),
         ),
       );
 
@@ -122,19 +129,58 @@ void main() {
       await tester.tap(find.byType(PopupMenuButton<String>));
       await tester.pumpAndSettle();
 
-      // Select the sort by higher grow by last month option
+      // Select the sort by higher grow by last week option
       await tester.tap(find.text('Higher Growth Last Month'));
       await tester.pumpAndSettle();
 
-      var finderWidget = find.byType(AssetWidget);
-      // Check that the sort happened.
-      await tester.scrollUntilVisible(
-        finderWidget,
-        1,
-        scrollable: find.byType(Scrollable),
+      // Check that it is the very first:
+      var thirdWidgetInList = find.byType(AssetWidget).at(2);
+      var foundWidget = tester.widget(thirdWidgetInList);
+      var key = foundWidget.key;
+
+      expect(const ValueKey('BNB').toString(), key.toString());
+    },
+  );
+
+  testWidgets(
+    'Check that asset list is sorted by max growth in the last quarter when the sort button is pressed',
+    (WidgetTester tester) async {
+      final AssetList assetList = AssetList.fromJson(jsonContent);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: AssetListWidget(
+              assetList: assetList, initialDate: AssetDate("2023.48")),
+        ),
       );
 
-      expect(finderWidget, findsOneWidget);
+      // Select the sort menu
+      await tester.tap(find.byType(PopupMenuButton<String>));
+      await tester.pumpAndSettle();
+
+      // Select the sort by higher grow by last week option
+      await tester.tap(find.text('Higher Growth Last Quarter'));
+      await tester.pumpAndSettle();
+
+      // Scroll down all the way to the bottom.
+      final Finder scrollableFinder = find.byType(Scrollable);
+      final ScrollableState scrollableState = tester.state(scrollableFinder);
+      double scrollPosition = 0;
+      double previousPosition;
+      do {
+        previousPosition = scrollPosition;
+        // Attempt to scroll down by 500 pixels.
+        await tester.drag(scrollableFinder, const Offset(0, -500));
+        await tester.pumpAndSettle();
+        scrollPosition = scrollableState.position.pixels;
+      } while (scrollPosition != previousPosition);
+
+      // Check that it is the very last:
+      final Finder lastWidgetFinder = find.byType(AssetWidget).last;
+      var foundWidget = tester.widget(lastWidgetFinder);
+      var key = foundWidget.key;
+
+      expect(const ValueKey('BTC').toString(), key.toString());
     },
   );
 
@@ -154,19 +200,24 @@ void main() {
       await tester.tap(find.byType(PopupMenuButton<String>));
       await tester.pumpAndSettle();
 
-      // Select the sort by higher grow by last month option
+      await tester.tap(find.text('Higher Growth Last Week'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AssetWidget), findsNothing);
+
+      await tester.tap(find.byType(PopupMenuButton<String>));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Higher Growth Last Month'));
       await tester.pumpAndSettle();
 
-      // var finderWidget = find.byType(AssetWidget);
-      // // Check that the sort happened.
-      // await tester.scrollUntilVisible(
-      //   finderWidget,
-      //   1,
-      //   scrollable: find.byType(Scrollable),
-      // );
+      expect(find.byType(AssetWidget), findsNothing);
 
-      // expect(finderWidget, findsOneWidget);
+      await tester.tap(find.byType(PopupMenuButton<String>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Higher Growth Last Quarter'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AssetWidget), findsNothing);
     },
   );
 }
