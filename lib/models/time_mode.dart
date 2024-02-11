@@ -16,6 +16,7 @@ enum TimeMode { yearWeek }
 TimeMode stringToTimeMode(String str) {
   switch (str) {
     case 'year.week':
+    case 'year-week':
       return TimeMode.yearWeek;
     default:
       throw ArgumentError('Invalid TimeMode string: $str');
@@ -34,7 +35,7 @@ TimeMode stringToTimeMode(String str) {
 String timeModeToString(TimeMode mode) {
   switch (mode) {
     case TimeMode.yearWeek:
-      return 'year.week';
+      return 'year-week';
     default:
       return '';
   }

@@ -25,7 +25,7 @@ void main() {
     () {
       // Test with valid TimeMode
       var result = timeModeToString(TimeMode.yearWeek);
-      assert(result == 'year.week',
+      assert(result == 'year-week',
           'TimeMode.yearWeek did not return expected string');
 
       // Test with an undefined or default case
