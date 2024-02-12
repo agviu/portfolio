@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert'; // For json decoding
+
 import 'package:portfolio/models/assets/asset_date.dart';
 import 'package:portfolio/models/assets/asset_list.dart';
 import 'package:portfolio/widgets/market/asset_list_widget.dart';
-import 'package:flutter/services.dart';
 
 class MarketScreen extends StatefulWidget {
   const MarketScreen({super.key});
@@ -29,23 +31,38 @@ class _MarketScreenState extends State<MarketScreen> {
     });
 
     try {
-      // Replace this with your actual data fetching logic
       assetList = await _loadAssets();
       setState(() {
         isLoading = false;
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Assets successfully downloaded!')),
+      );
     } catch (e) {
       setState(() {
         isLoading = false;
         errorMessage = 'Failed to load assets: ${e.toString()}';
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load assets: ${e.toString()}')),
+      );
     }
   }
 
   Future<AssetList> _loadAssets() async {
-    String jsonString =
-        await rootBundle.loadString('assets/data/asset_list.json');
-    return AssetList.fromJson(jsonString);
+    final url = Uri.parse(
+        'https://investrends-7320c-default-rtdb.europe-west1.firebasedatabase.app/exporter.json');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      try {
+        return AssetList.fromJson(response.body);
+      } catch (e) {
+        throw Exception('An error occurred: ${e.toString()}');
+      }
+    } else {
+      throw Exception('Failed to load asset list');
+    }
   }
 
   @override
@@ -62,9 +79,9 @@ class _MarketScreenState extends State<MarketScreen> {
                   onRefresh: _fetchAssets,
                   child: AssetListWidget(
                     assetList: assetList,
-                    // initialDate: AssetDate.dateTime(DateTime.now()),
+                    initialDate: AssetDate.dateTime(DateTime.now()),
                     //@todo: This is just for a test, return to normal
-                    initialDate: AssetDate("2023.48"),
+                    // initialDate: AssetDate("2023.48"),
                   ),
                 ),
     );
