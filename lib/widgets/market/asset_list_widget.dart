@@ -88,6 +88,11 @@ class _AssetListWidgetState extends State<AssetListWidget> {
 
         displayAssetList = filtered;
         discardedAssetList = discarded;
+        if (discarded.length != 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Discarded ${discarded.length} assets.')),
+          );
+        }
       },
     );
   }

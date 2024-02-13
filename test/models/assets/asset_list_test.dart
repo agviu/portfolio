@@ -94,4 +94,22 @@ void main() {
       }
     },
   );
+
+  test(
+    'Loads a real JSON example, generated from the investrends app.',
+    () async {
+      var jsonFile = 'test/models/assets/real_example_assets_list.json';
+      String jsonContent = await File(jsonFile).readAsString();
+
+      final AssetList assetList = AssetList.fromJson(jsonContent);
+      AssetList filtered;
+      AssetList discarded;
+
+      (filtered, discarded) =
+          assetList.sortByHigherValueOnDate(AssetDate("2024.05"));
+      if (filtered.length != 24 || discarded.length != 96) {
+        fail("The number of discarded or filtered is not correct.");
+      }
+    },
+  );
 }
