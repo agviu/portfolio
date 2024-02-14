@@ -13,8 +13,18 @@ class AssetDate {
   /// [date]: A formatted date string (e.g., 'YYYY.WW').
   /// [mode]: The time mode to interpret the date, defaulting to `TimeMode.yearWeek`.
   AssetDate(String date, {this.mode = TimeMode.yearWeek})
-      : _dateTime = _parseDate(date, mode),
-        _date = date;
+      : _dateTime = _parseDate(date, mode) {
+    if (mode == TimeMode.yearWeek) {
+      // We check if the week is between 1 and 9 and remove a 0 in the left if it exists.
+      if (!validateTimeMode(mode, date)) {
+        throw const FormatException('Invalid format. Expected format: YYYY.WW');
+      }
+
+      var parts = date.split('.');
+      int week = int.tryParse(parts[1]) ?? 0;
+      _date = '${parts[0]}.${week.toString()}';
+    }
+  }
 
   /// Constructs an AssetDate object from a DateTime object.
   ///

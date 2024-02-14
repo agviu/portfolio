@@ -192,5 +192,11 @@ void main() {
     });
 
     // Add more tests as needed to cover other aspects or edge cases
+    test('Creates an Asset with a week between 1 and 10.', () {
+      var assetDate = AssetDate('2024.05');
+      if (assetDate.date != '2024.5') {
+        fail("The asset date kept the 0 in front of the week number.");
+      }
+    });
   });
 }

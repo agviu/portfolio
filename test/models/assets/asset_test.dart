@@ -46,7 +46,7 @@ void main() {
 
       expect(() => asset.estimatePriceValue(AssetDate('2023.3')),
           throwsArgumentError);
-      expect(() => asset.estimatePriceValue(AssetDate('2223.3')),
+      expect(() => asset.estimatePriceValue(AssetDate('1993.3')),
           throwsArgumentError);
 
       Asset assetWithEstimations = Asset(
