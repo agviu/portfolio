@@ -72,6 +72,7 @@ class AssetList {
       AssetDate firstDate, int dateBack) {
     final dates = firstDate.getLatestsDates(dateBack);
     final lastDate = dates.last;
+    dates.insert(0, firstDate);
 
     var (List<Asset> filtered, List<Asset> discarded) =
         _filterAssetsByDates(assets, dates);
@@ -107,44 +108,72 @@ class AssetList {
     return (AssetList(filtered), AssetList(discarded));
   }
 
+  /// Filters the list of assets based on a list of asset dates.
+  ///
+  /// Filters the [originalList] of assets based on the availability of prices
+  /// for the first and last dates provided in the [assetDateList]. Returns two
+  /// lists: the [filtered] list containing assets with prices available for both
+  /// the first and last dates, and the [discarded] list containing assets that
+  /// were removed from the original list due to missing prices for either the
+  /// first or last dates.
+  ///
+  /// [originalList]: The original list of assets to be filtered.
+  /// [assetDateList]: The list of asset dates used for filtering.
+  /// Returns a tuple containing two lists: the filtered list of assets
+  /// and the discarded list of assets.
   (List<Asset>, List<Asset>) _filterAssetsByDates(
-      List<Asset> originalList, List<AssetDate> assetDateList) {
+    List<Asset> originalList,
+    List<AssetDate> assetDateList,
+  ) {
     final List<Asset> filtered = [];
     final List<Asset> discarded = [];
+
+    // Get the first and last dates from the assetDateList
     final AssetDate firstDate = assetDateList.first;
     final AssetDate lastDate = assetDateList.last;
 
-    // Clone the original list.
+    // Clone the original list to avoid modifying it directly
     filtered.addAll(originalList);
+
+    // Loop through each asset in the original list
     for (var asset in originalList) {
       try {
+        // Try to get the price for the first date
         asset.price(firstDate);
       } catch (e) {
+        // Handle the case where price for first date is not available
         if (e is ArgumentError) {
-          // Remove asset from list
+          // Remove the asset from the filtered list and add it to the discarded list
           filtered.remove(asset);
           discarded.add(asset);
+          // Continue to the next asset
           continue;
         } else {
+          // Rethrow any other exceptions
           rethrow;
         }
       }
 
+      // Check if firstDate is different from lastDate
       if (firstDate != lastDate) {
         try {
+          // Try to get the price for the last date
           asset.price(lastDate);
         } catch (e) {
+          // Handle the case where price for last date is not available
           if (e is ArgumentError) {
-            // Remove asset from list
+            // Remove the asset from the filtered list and add it to the discarded list
             filtered.remove(asset);
             discarded.add(asset);
           } else {
+            // Rethrow any other exceptions
             rethrow;
           }
         }
       }
     }
 
+    // Return a tuple containing the filtered and discarded lists
     return (filtered, discarded);
   }
 }

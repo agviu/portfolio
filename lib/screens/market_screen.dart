@@ -79,7 +79,8 @@ class _MarketScreenState extends State<MarketScreen> {
                   onRefresh: _fetchAssets,
                   child: AssetListWidget(
                     assetList: assetList,
-                    initialDate: AssetDate.dateTime(DateTime.now()),
+                    initialDate:
+                        AssetDate.dateTime(DateTime.now()).getPreviousDate(),
                     //@todo: This is just for a test, return to normal
                     // initialDate: AssetDate("2023.48"),
                   ),
